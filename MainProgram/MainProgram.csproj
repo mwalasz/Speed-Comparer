@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Management" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libs\DotNetDll\DotNetDll.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DotNetDll">
+      <HintPath>..\Libs\DotNetDll\obj\x64\Debug\netstandard2.1\DotNetDll.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

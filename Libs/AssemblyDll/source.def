@@ -1,0 +1,3 @@
+LIBRARY AssemblyDll  
+EXPORTS 
+AsmVal
