@@ -3,10 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:AssemblyProject"
-        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
-        Title="Multiplication by scalar" Height="450" Width="800">
+        Title="Speed-comparer" Height="499" Width="969">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -19,14 +17,15 @@
             Grid.Column="1"
             Width="5"/>
 
+        <!-- matrix visualization -->
         <StackPanel 
             Grid.Column="2"
             Margin="10"
             HorizontalAlignment="Stretch">
 
             <TextBlock 
-                FontSize="20"
-                FontWeight="SemiBold"
+                FontSize="30"
+                FontWeight="UltraBold"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 TextWrapping="Wrap">
@@ -34,27 +33,223 @@
             </TextBlock>
         </StackPanel>
 
+        <!--settings-->
         <StackPanel 
             Grid.Column="0"
             Margin="10">
 
             <TextBlock 
                 Text="Settings"
-                FontSize="20"
-                FontWeight="SemiBold"
+                FontSize="30"
+                FontWeight="UltraBold"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 TextWrapping="Wrap"/>
+
+             <!-- system info --> 
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED">
+                <StackPanel>
+                    
+                    <!--header-->
+                    <TextBlock
+                        Text="System info:"
+                        Margin="0 0 0 10"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+
+                    <!--body-->
+                    <Border 
+                        BorderThickness="1"
+                        Padding="5"
+                        BorderBrush="#EAEDED">
+                        <StackPanel>
+                            
+                            <!-- cores -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock 
+                                    Grid.Column="0"
+                                    Text="Cores:"
+                                    FontSize="12"
+                                    HorizontalAlignment="Left"
+                                    TextWrapping="Wrap"/>
+                                <TextBlock 
+                                    x:Name="coreNumber"
+                                    Grid.Column="1"
+                                    FontSize="12"
+                                    TextAlignment="Right"
+                                    TextWrapping="Wrap"/>
+                            </Grid>
+
+                            <!-- logical processors -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock 
+                                    Grid.Column="0"
+                                    Text="Logical processors:"
+                                    FontSize="12"
+                                    HorizontalAlignment="Left"
+                                    TextWrapping="Wrap"/>
+                                <TextBlock
+                                    x:Name="logicalProcessorsNumber"
+                                    Grid.Column="1"
+                                    FontSize="12"
+                                    TextAlignment="Right"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- library language -->
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED">
+                <StackPanel>
+                    <TextBlock
+                        Text="Choose library language:"
+                        Margin="0 0 0 10"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        FontSize="13"/>
+                    <ComboBox 
+                        SelectedIndex="0"
+                          HorizontalContentAlignment="Center">
+                        <ComboBoxItem>Assembly</ComboBoxItem>
+                        <ComboBoxItem>C#</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <!-- used threads -->
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED">
+                <StackPanel>
+                    
+                    <!--header-->
+                    <TextBlock
+                        Text="Set number of used threads:"
+                        Margin="0 0 0 10"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        FontSize="13"/>
+                    
+                    <!--body-->
+                    <Border
+                        BorderThickness="1"
+                        Padding="5"
+                        BorderBrush="#EAEDED">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                                Grid.Column="0"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="1 "/>
+                                <CheckBox />
+                            </StackPanel>
+                        
+                            <StackPanel
+                                Grid.Column="1"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="2 "/>
+                                <CheckBox/>
+                            </StackPanel>
+                        
+                            <StackPanel
+                                Grid.Column="2"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="4 "/>
+                                <CheckBox />
+                            </StackPanel>
+                        
+                            <StackPanel
+                                Grid.Column="3"
+                                HorizontalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="8 "/>
+                                <CheckBox />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Border>
             
-            <TextBlock 
-                x:Name="coreNumber"
-                Margin="5"
-                TextWrapping="Wrap"/>
-            <TextBlock
-                x:Name="logicalProcessorsNumber"
-                Margin="5"
-                TextWrapping="Wrap"/>
+            <!-- input file -->
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED">
+                <StackPanel>
+                    
+                    <!--header-->
+                    <TextBlock
+                        Text="Choose input file:"
+                        Margin="0 0 0 10"
+                        FontWeight="Bold"
+                        HorizontalAlignment="Center"
+                        FontSize="13"/>
+
+                    <!--searchbar-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="9*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border 
+                            BorderThickness="0.5 0.5 0 0.5"
+                            BorderBrush="Black">
+                            <TextBlock
+                                x:Name="searchBox"
+                                Grid.Column="0">
+
+                            </TextBlock>
+                        </Border>
+                        
+                        <Button
+                            Click="searchFileButton_Click"
+                            x:Name="searchFileButton"
+                            Grid.Column="1">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="go"/>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
         </StackPanel>
-        
     </Grid>
 </Window>
