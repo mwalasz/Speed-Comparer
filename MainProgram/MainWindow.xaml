@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Speed-comparer" Height="548" Width="1166">
+        Title="Speed-comparer" Height="548" Width="1191">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -234,17 +234,39 @@
                 </StackPanel>
             </Border>
 
-            <!--run button-->
-            <Button
-                Background="GreenYellow"
-                Margin="0 0 10 0"
-                HorizontalAlignment="Right"
-                Width="95">
-                <TextBlock
-                    Text="run...">
+            <!--buttons-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                </TextBlock>
-            </Button>
+                <!--load button-->
+                <Button
+                    Grid.Column="0"
+                    x:Name="loadDataButton"
+                    Click="loadDataButton_Click"
+                    Background="PaleVioletRed"
+                    Margin="0 0 0 0"
+                    HorizontalAlignment="Right"
+                    Width="95">
+                    <TextBlock
+                        Text="load data"/>
+                </Button>
+                
+                <!--run button-->
+                <Button
+                    Grid.Column="1"
+                    x:Name="runAppButton"
+                    Click="runAppButton_Click"
+                    Background="GreenYellow"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Right"
+                    Width="95">
+                    <TextBlock
+                        Text="run app"/>
+                </Button>
+            </Grid>
         </StackPanel>
 
         <GridSplitter 
@@ -280,19 +302,29 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox
-                        Grid.Column="0">
-                    </TextBox>
-                    
-                    <!--x sign-->
+                        x:Name="matrixInputBox"
+                        Grid.Column="0"
+                        BorderBrush="Transparent"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"/>
+
+                        <!--x sign-->
                     <TextBlock
+                        x:Name="multiplySign"
                         Text="X"
+                        Visibility="Hidden"
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"
                         Grid.Column="1">
                     </TextBlock>
-                    <TextBox
-                        Grid.Column="1" Grid.ColumnSpan="2" Margin="96,184,0,185">
-                    </TextBox>
+                    <TextBox 
+                        x:Name="scalarInputBox"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        Margin="96,184,0,185"
+                        BorderBrush="Transparent"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"/>
                 </Grid>
             </Border>
         </StackPanel>
@@ -335,6 +367,8 @@
                         BorderBrush="Gray"
                         BorderThickness="1" Height="257">
                         <TextBlock
+                            x:Name="finalMatrix"
+                            VerticalAlignment="Center"
                             HorizontalAlignment="Center"/>
                     </Border>
 
