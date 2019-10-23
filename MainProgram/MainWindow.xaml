@@ -4,40 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Speed-comparer" Height="499" Width="969">
+        Title="Speed-comparer" Height="548" Width="1166">
 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        
-        <GridSplitter 
-            Grid.Column="1"
-            Width="5"/>
-
-        <!-- matrix visualization -->
-        <StackPanel 
-            Grid.Column="2"
-            Margin="10"
-            HorizontalAlignment="Stretch">
-
-            <TextBlock 
-                FontSize="30"
-                FontWeight="UltraBold"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                TextWrapping="Wrap">
-            Matrix visualization
-            </TextBlock>
-        </StackPanel>
 
         <!--settings-->
         <StackPanel 
             Grid.Column="0"
             Margin="10">
 
+            <!--header-->
             <TextBlock 
                 Text="Settings"
                 FontSize="30"
@@ -46,14 +29,14 @@
                 VerticalAlignment="Top"
                 TextWrapping="Wrap"/>
 
-             <!-- system info --> 
+            <!-- system info -->
             <Border 
                 BorderThickness="3"
                 Margin="10"
                 Padding="10"
                 BorderBrush="#EAEDED">
                 <StackPanel>
-                    
+
                     <!--header-->
                     <TextBlock
                         Text="System info:"
@@ -68,7 +51,7 @@
                         Padding="5"
                         BorderBrush="#EAEDED">
                         <StackPanel>
-                            
+
                             <!-- cores -->
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -143,7 +126,7 @@
                 Padding="10"
                 BorderBrush="#EAEDED">
                 <StackPanel>
-                    
+
                     <!--header-->
                     <TextBlock
                         Text="Set number of used threads:"
@@ -151,7 +134,7 @@
                         FontWeight="Bold"
                         HorizontalAlignment="Center"
                         FontSize="13"/>
-                    
+
                     <!--body-->
                     <Border
                         BorderThickness="1"
@@ -173,7 +156,7 @@
                                     Text="1 "/>
                                 <CheckBox />
                             </StackPanel>
-                        
+
                             <StackPanel
                                 Grid.Column="1"
                                 HorizontalAlignment="Center"
@@ -182,7 +165,7 @@
                                     Text="2 "/>
                                 <CheckBox/>
                             </StackPanel>
-                        
+
                             <StackPanel
                                 Grid.Column="2"
                                 HorizontalAlignment="Center"
@@ -191,7 +174,7 @@
                                     Text="4 "/>
                                 <CheckBox />
                             </StackPanel>
-                        
+
                             <StackPanel
                                 Grid.Column="3"
                                 HorizontalAlignment="Center"
@@ -204,7 +187,7 @@
                     </Border>
                 </StackPanel>
             </Border>
-            
+
             <!-- input file -->
             <Border 
                 BorderThickness="3"
@@ -212,7 +195,7 @@
                 Padding="10"
                 BorderBrush="#EAEDED">
                 <StackPanel>
-                    
+
                     <!--header-->
                     <TextBlock
                         Text="Choose input file:"
@@ -237,7 +220,7 @@
 
                             </TextBlock>
                         </Border>
-                        
+
                         <Button
                             Click="searchFileButton_Click"
                             x:Name="searchFileButton"
@@ -248,6 +231,126 @@
                                 Text="go"/>
                         </Button>
                     </Grid>
+                </StackPanel>
+            </Border>
+
+            <!--run button-->
+            <Button
+                Background="GreenYellow"
+                Margin="0 0 10 0"
+                HorizontalAlignment="Right"
+                Width="95">
+                <TextBlock
+                    Text="run...">
+
+                </TextBlock>
+            </Button>
+        </StackPanel>
+
+        <GridSplitter 
+            Grid.Column="1"
+            Width="5"/>
+
+        <!-- input data -->
+        <StackPanel 
+            Grid.Column="2"
+            Margin="10"
+            HorizontalAlignment="Stretch">
+            
+            <!--header-->
+            <TextBlock 
+                Text="Input data"
+                FontSize="30"
+                FontWeight="UltraBold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                TextWrapping="Wrap"/>
+            
+            <!--body-->
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED" Height="417">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Grid.Column="0">
+                    </TextBox>
+                    
+                    <!--x sign-->
+                    <TextBlock
+                        Text="X"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Grid.Column="1">
+                    </TextBlock>
+                    <TextBox
+                        Grid.Column="1" Grid.ColumnSpan="2" Margin="96,184,0,185">
+                    </TextBox>
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <GridSplitter 
+            Grid.Column="3"
+            Width="5"/>
+
+        <!--output data-->
+        <StackPanel 
+            Grid.Column="4"
+            Margin="10"
+            HorizontalAlignment="Stretch">
+            
+            <!--header-->
+            <TextBlock 
+                Text="Output data"
+                FontSize="30"
+                FontWeight="UltraBold"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                TextWrapping="Wrap"/>
+            
+            <!--body-->
+            <Border 
+                BorderThickness="3"
+                Margin="10"
+                Padding="10"
+                BorderBrush="#EAEDED" Height="417">
+                
+                <StackPanel>
+                    <!--final matrix-->
+                    <TextBlock
+                        Text="Final matrix:"
+                        Margin="0 0 0 10"
+                        HorizontalAlignment="Left"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+                    <Border 
+                        BorderBrush="Gray"
+                        BorderThickness="1" Height="257">
+                        <TextBlock
+                            HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!--output-->
+                    <TextBlock
+                        Text="Output:"
+                        Margin="0 10 0 10"
+                        HorizontalAlignment="Left"
+                        FontWeight="Bold"
+                        FontSize="13"/>
+                    <Border 
+                        BorderBrush="Gray"
+                        BorderThickness="1" Height="58">
+                        <TextBlock
+                            HorizontalAlignment="Center"/>
+                    </Border>
                 </StackPanel>
             </Border>
         </StackPanel>
