@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using MainProgram.Maths;
+using System.Runtime.InteropServices;
 
 namespace MainProgram.Utils
 {

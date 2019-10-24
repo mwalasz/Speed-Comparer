@@ -1,4 +1,4 @@
-﻿namespace MainProgram.Utils
+﻿namespace MainProgram.Libraries
 {
     public enum LibraryLanguage
     {

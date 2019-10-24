@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Speed-comparer" Height="548" Width="1191">
+        Title="Speed-comparer" Height="548" Width="1208">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -391,9 +391,10 @@
                         FontSize="13"/>
                     <Border 
                         BorderBrush="Gray"
-                        BorderThickness="1" Height="58">
+                        BorderThickness="1" Height="67">
                         <TextBlock
-                            HorizontalAlignment="Center"/>
+                            x:Name="outputTextBlock"
+                            HorizontalAlignment="Left"/>
                     </Border>
                 </StackPanel>
             </Border>

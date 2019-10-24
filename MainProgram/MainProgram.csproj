@@ -7,18 +7,24 @@
     <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="System.Management" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Libs\AssemblyDll\AssemblyDll.vcxproj" />
     <ProjectReference Include="..\Libs\DotNetDll\DotNetDll.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="DotNetDll">
-      <HintPath>..\Libs\DotNetDll\obj\x64\Debug\netstandard2.1\DotNetDll.dll</HintPath>
+      <HintPath>..\Libs\DotNetDll\bin\x86\Debug\netstandard2.1\DotNetDll.dll</HintPath>
     </Reference>
   </ItemGroup>
 

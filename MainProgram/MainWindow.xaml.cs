@@ -1,4 +1,5 @@
 ﻿using MainProgram.Files;
+using MainProgram.Libraries;
 using MainProgram.Maths;
 using MainProgram.Utils;
 using System;
@@ -9,6 +10,8 @@ namespace AssemblyProject
     public partial class MainWindow : Window
     {
         private LoadedData data;
+        private Executer executer;
+        private Threads threadsNumber;
 
         public MainWindow()
         {
@@ -36,27 +39,13 @@ namespace AssemblyProject
 
         private void runAppButton_Click(object sender, RoutedEventArgs e)
         {
-            if (languageComboBox.SelectedIndex > 0)
+            if (CheckIfAnyLanguageIsSelected())
             {
-                if (data != null)
+                if (CheckIfDataIsLoaded())
                 {
                     if (CheckIfAnyTextBoxIsChecked())
                     {
-                        switch (languageComboBox.SelectedIndex)
-                        {
-                            case (int)LibraryLanguage.CSharp:
-                                var result = data.Matrix.MultiplyByScalar(data.Scalar);
-                                SetOutputDataTextBoxesContent(result);
-                                break;
-
-                            case (int)LibraryLanguage.Assembly:
-                                var res = AssemblyDll.AsmVal();
-                                finalMatrix.Text = res.ToString();
-                                break;
-
-                            default:
-                                break;
-                        }
+                        RunApplicationMethod();
                     }
                     else
                     {
@@ -121,6 +110,7 @@ namespace AssemblyProject
             if (sender == eightThreads)
             {
                 eightThreads.IsChecked = true;
+                threadsNumber = Threads.Eight;
 
                 if (fourThreads.IsChecked == true)
                     fourThreads.IsChecked = !fourThreads.IsChecked;
@@ -135,6 +125,7 @@ namespace AssemblyProject
             if (sender == fourThreads)
             {
                 fourThreads.IsChecked = true;
+                threadsNumber = Threads.Four;
 
                 if (eightThreads.IsChecked == true)
                     eightThreads.IsChecked = !eightThreads.IsChecked;
@@ -149,6 +140,7 @@ namespace AssemblyProject
             if (sender == twoThreads)
             {
                 twoThreads.IsChecked = true;
+                threadsNumber = Threads.Two;
 
                 if (eightThreads.IsChecked == true)
                     eightThreads.IsChecked = !eightThreads.IsChecked;
@@ -163,6 +155,7 @@ namespace AssemblyProject
             if (sender == oneThread)
             {
                 oneThread.IsChecked = true;
+                threadsNumber = Threads.One;
 
                 if (eightThreads.IsChecked == true)
                     eightThreads.IsChecked = !eightThreads.IsChecked;
@@ -193,7 +186,46 @@ namespace AssemblyProject
 
             return true;
         }
-        
+
         #endregion
+
+        #region TextBlock
+        
+        private void SetOutputTextBlockContent(string content)
+        {
+            outputTextBlock.Text = content;
+        }
+
+        #endregion
+
+        #region ComboBox
+        
+        private bool CheckIfAnyLanguageIsSelected()
+        {
+            return languageComboBox.SelectedIndex > 0;
+        }
+
+        private LibraryLanguage GetSelectedLanguage()
+        {
+            return (LibraryLanguage)languageComboBox.SelectedIndex;
+        }
+
+        #endregion
+
+        private bool CheckIfDataIsLoaded()
+        {
+            return data != null;
+        }
+
+        private void RunApplicationMethod()
+        {
+            executer = new Executer(GetSelectedLanguage(), threadsNumber, data);
+
+            executer.Execute();
+            
+            finalMatrix.Text = executer.Result.ToString();
+            
+            SetOutputTextBlockContent(executer.RetrieveExectionInfo());
+        }
     }
 }
