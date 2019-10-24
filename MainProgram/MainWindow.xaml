@@ -111,10 +111,12 @@
                         HorizontalAlignment="Center"
                         FontSize="13"/>
                     <ComboBox 
+                        x:Name="languageComboBox"
                         SelectedIndex="0"
-                          HorizontalContentAlignment="Center">
-                        <ComboBoxItem>Assembly</ComboBoxItem>
-                        <ComboBoxItem>C#</ComboBoxItem>
+                        HorizontalContentAlignment="Center">
+                            <ComboBoxItem></ComboBoxItem>
+                            <ComboBoxItem>Assembly</ComboBoxItem>
+                            <ComboBoxItem>C#</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
             </Border>
@@ -154,7 +156,9 @@
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Text="1 "/>
-                                <CheckBox />
+                                <CheckBox 
+                                    x:Name="oneThread"
+                                    Click="threadCheckBox_Click"/>
                             </StackPanel>
 
                             <StackPanel
@@ -163,7 +167,9 @@
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Text="2 "/>
-                                <CheckBox/>
+                                <CheckBox
+                                    x:Name="twoThreads"
+                                    Click="threadCheckBox_Click"/>
                             </StackPanel>
 
                             <StackPanel
@@ -172,7 +178,9 @@
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Text="4 "/>
-                                <CheckBox />
+                                <CheckBox
+                                    x:Name="fourThreads"
+                                    Click="threadCheckBox_Click"/>
                             </StackPanel>
 
                             <StackPanel
@@ -181,7 +189,9 @@
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Text="8 "/>
-                                <CheckBox />
+                                <CheckBox 
+                                    x:Name="eightThreads"
+                                    Click="threadCheckBox_Click"/>
                             </StackPanel>
                         </Grid>
                     </Border>

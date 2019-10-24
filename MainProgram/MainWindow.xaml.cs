@@ -16,6 +16,8 @@ namespace AssemblyProject
             SetSystemInfoTextBoxesContent();
         }
 
+        #region Buttons
+
         private void searchFileButton_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -34,14 +36,41 @@ namespace AssemblyProject
 
         private void runAppButton_Click(object sender, RoutedEventArgs e)
         {
-            if (data != null)
+            if (languageComboBox.SelectedIndex > 0)
             {
-                var result = data.Matrix.MultiplyByScalar(data.Scalar);
-                SetOutputDataTextBoxesContent(result);
+                if (data != null)
+                {
+                    if (CheckIfAnyTextBoxIsChecked())
+                    {
+                        switch (languageComboBox.SelectedIndex)
+                        {
+                            case (int)LibraryLanguage.CSharp:
+                                var result = data.Matrix.MultiplyByScalar(data.Scalar);
+                                SetOutputDataTextBoxesContent(result);
+                                break;
+
+                            case (int)LibraryLanguage.Assembly:
+                                var res = AssemblyDll.AsmVal();
+                                finalMatrix.Text = res.ToString();
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Choose number of threads to run program on!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Load any data to process!");
+                }
             }
             else
             {
-                MessageBox.Show("Cannot run program, because there is no data to process!");
+                MessageBox.Show("Choose library language!");
             }
         }
 
@@ -59,6 +88,10 @@ namespace AssemblyProject
                 MessageBox.Show("Choose .txt file in searchbox!");
             }
         }
+
+        #endregion
+
+        #region TextBoxes
 
         private void SetInputDataTextBoxesContent()
         {
@@ -78,5 +111,89 @@ namespace AssemblyProject
         {
             finalMatrix.Text = resultMatrix.ToString();
         }
+
+        #endregion
+
+        #region CheckBoxes
+        
+        private void threadCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == eightThreads)
+            {
+                eightThreads.IsChecked = true;
+
+                if (fourThreads.IsChecked == true)
+                    fourThreads.IsChecked = !fourThreads.IsChecked;
+
+                if (twoThreads.IsChecked == true)
+                    twoThreads.IsChecked = !twoThreads.IsChecked;
+
+                if (oneThread.IsChecked == true)
+                    oneThread.IsChecked = !oneThread.IsChecked;
+            }
+
+            if (sender == fourThreads)
+            {
+                fourThreads.IsChecked = true;
+
+                if (eightThreads.IsChecked == true)
+                    eightThreads.IsChecked = !eightThreads.IsChecked;
+
+                if (twoThreads.IsChecked == true)
+                    twoThreads.IsChecked = !twoThreads.IsChecked;
+
+                if (oneThread.IsChecked == true)
+                    oneThread.IsChecked = !oneThread.IsChecked;
+            }
+
+            if (sender == twoThreads)
+            {
+                twoThreads.IsChecked = true;
+
+                if (eightThreads.IsChecked == true)
+                    eightThreads.IsChecked = !eightThreads.IsChecked;
+
+                if (fourThreads.IsChecked == true)
+                    fourThreads.IsChecked = !fourThreads.IsChecked;
+
+                if (oneThread.IsChecked == true)
+                    oneThread.IsChecked = !oneThread.IsChecked;
+            }
+
+            if (sender == oneThread)
+            {
+                oneThread.IsChecked = true;
+
+                if (eightThreads.IsChecked == true)
+                    eightThreads.IsChecked = !eightThreads.IsChecked;
+
+                if (fourThreads.IsChecked == true)
+                    fourThreads.IsChecked = !fourThreads.IsChecked;
+
+                if (twoThreads.IsChecked == true)
+                    twoThreads.IsChecked = !twoThreads.IsChecked;
+            }
+        }
+
+        private bool CheckIfAnyTextBoxIsChecked()
+        {
+            if (oneThread.IsChecked != true)
+            {
+                if (twoThreads.IsChecked != true)
+                {
+                    if (fourThreads.IsChecked != true)
+                    {
+                        if (eightThreads.IsChecked != true)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+        
+        #endregion
     }
 }
