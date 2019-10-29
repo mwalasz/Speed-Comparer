@@ -21,9 +21,7 @@ namespace AssemblyProject
             SetThreadsTextBlockContent();
         }
 
-
-        private void Slider_ValueChanged(object sender,
-            RoutedPropertyChangedEventArgs<double> e)
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             var slider = sender as Slider;
             SetThreadsTextBlockContent(slider.Value);
@@ -196,9 +194,10 @@ namespace AssemblyProject
             threadsTextBox.Text = value.ToString();
             threadsSlider.Value = value;
         }
+
         private void WrongThreadNumberInputMessage()
         {
-            MessageBox.Show("Number of threads must be between 0 and 64.\n Cannot contain any letter!");
+            MessageBox.Show("Number of threads must be between 0 and 64.\n It cannot contain any letter!");
         }
     }
 }
