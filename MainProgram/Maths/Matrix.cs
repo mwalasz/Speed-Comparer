@@ -5,7 +5,7 @@ namespace MainProgram.Maths
 {
     public class Matrix
     {
-        private readonly int[,] content;
+        private readonly float[,] content;
 
         public int Columns { get; set; }
         public int Rows { get; set; }
@@ -15,10 +15,10 @@ namespace MainProgram.Maths
             Rows = rows;
             Columns = columns;
 
-            content = new int[Rows, Columns];
+            content = new float[Rows, Columns];
         }
 
-        public Matrix(int[,] matrix)
+        public Matrix(float[,] matrix)
         {
             Rows = matrix.GetLength(0);
             Columns = matrix.GetLength(1);
@@ -41,7 +41,7 @@ namespace MainProgram.Maths
 
         public override string ToString()
         {
-            var numbers = content.Cast<int>()
+            var numbers = content.Cast<float>()
                 .Select(i => i.ToString())
                 .ToArray();
 

@@ -4,9 +4,9 @@ namespace MainProgram.Maths
 {
     public class Scalar
     {
-        public int Value { get; set; }
+        public float Value { get; set; }
         
-        public Scalar(int value)
+        public Scalar(float value)
         {
             Value = value;
         }
@@ -19,7 +19,7 @@ namespace MainProgram.Maths
             }
             else
             {
-                Value = Convert.ToInt32(value);
+                Value = float.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
             }
         }
     }
