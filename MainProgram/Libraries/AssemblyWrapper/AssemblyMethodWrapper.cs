@@ -1,9 +1,8 @@
-﻿using MainProgram.Maths;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
-namespace MainProgram.Utils
+namespace MainProgram.Libraries.AssemblyWrapper
 {
-    public static class AssemblyDll
+    public static class AssemblyMethodWrapper
     {
         private const string PathToDll = @"D:\Studia\programowanie\Speed-Comparer\Libs\AssemblyDll\Debug\AssemblyDll.dll";
 

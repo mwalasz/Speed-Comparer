@@ -1,7 +1,7 @@
 ﻿using DotNetDll;
 using MainProgram.Extensions;
 using MainProgram.Files;
-using MainProgram.Utils;
+using MainProgram.Libraries.AssemblyWrapper;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -74,7 +74,7 @@ namespace MainProgram.Libraries
             switch (methodLanguage)
             {
                 case LibraryLanguage.Assembly:
-                    methodToExecute = AssemblyDll.AsmVal;
+                    methodToExecute = AssemblyMethodWrapper.AsmVal;
                     break;
 
                 case LibraryLanguage.CSharp:
