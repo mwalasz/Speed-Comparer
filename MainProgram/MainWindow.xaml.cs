@@ -4,6 +4,7 @@ using MainProgram.Maths;
 using MainProgram.Utils;
 using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AssemblyProject
 {
@@ -11,12 +12,20 @@ namespace AssemblyProject
     {
         private LoadedData data;
         private Executer executer;
-        private Threads threadsNumber;
 
         public MainWindow()
         {
             InitializeComponent();
             SetSystemInfoTextBoxesContent();
+            SetThreadsTextBlockContent();
+        }
+
+
+        private void Slider_ValueChanged(object sender,
+            RoutedPropertyChangedEventArgs<double> e)
+        {
+            var slider = sender as Slider;
+            SetThreadsTextBlockContent(slider.Value);
         }
 
         #region Buttons
@@ -43,7 +52,7 @@ namespace AssemblyProject
             {
                 if (CheckIfDataIsLoaded())
                 {
-                    if (CheckIfAnyTextBoxIsChecked())
+                    if (CheckIfThreadsAreChoosed())
                     {
                         RunApplicationMethod();
                     }
@@ -101,99 +110,36 @@ namespace AssemblyProject
             finalMatrix.Text = resultMatrix.ToString();
         }
 
-        #endregion
-
-        #region CheckBoxes
-        
-        private void threadCheckBox_Click(object sender, RoutedEventArgs e)
+        private void threadsTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (sender == eightThreads)
+            if (e.Key == System.Windows.Input.Key.Enter)
             {
-                eightThreads.IsChecked = true;
-                threadsNumber = Threads.Eight;
+                double value = Convert.ToDouble(threadsTextBox.Text);
 
-                if (fourThreads.IsChecked == true)
-                    fourThreads.IsChecked = !fourThreads.IsChecked;
-
-                if (twoThreads.IsChecked == true)
-                    twoThreads.IsChecked = !twoThreads.IsChecked;
-
-                if (oneThread.IsChecked == true)
-                    oneThread.IsChecked = !oneThread.IsChecked;
-            }
-
-            if (sender == fourThreads)
-            {
-                fourThreads.IsChecked = true;
-                threadsNumber = Threads.Four;
-
-                if (eightThreads.IsChecked == true)
-                    eightThreads.IsChecked = !eightThreads.IsChecked;
-
-                if (twoThreads.IsChecked == true)
-                    twoThreads.IsChecked = !twoThreads.IsChecked;
-
-                if (oneThread.IsChecked == true)
-                    oneThread.IsChecked = !oneThread.IsChecked;
-            }
-
-            if (sender == twoThreads)
-            {
-                twoThreads.IsChecked = true;
-                threadsNumber = Threads.Two;
-
-                if (eightThreads.IsChecked == true)
-                    eightThreads.IsChecked = !eightThreads.IsChecked;
-
-                if (fourThreads.IsChecked == true)
-                    fourThreads.IsChecked = !fourThreads.IsChecked;
-
-                if (oneThread.IsChecked == true)
-                    oneThread.IsChecked = !oneThread.IsChecked;
-            }
-
-            if (sender == oneThread)
-            {
-                oneThread.IsChecked = true;
-                threadsNumber = Threads.One;
-
-                if (eightThreads.IsChecked == true)
-                    eightThreads.IsChecked = !eightThreads.IsChecked;
-
-                if (fourThreads.IsChecked == true)
-                    fourThreads.IsChecked = !fourThreads.IsChecked;
-
-                if (twoThreads.IsChecked == true)
-                    twoThreads.IsChecked = !twoThreads.IsChecked;
-            }
-        }
-
-        private bool CheckIfAnyTextBoxIsChecked()
-        {
-            if (oneThread.IsChecked != true)
-            {
-                if (twoThreads.IsChecked != true)
+                if (value <= 64 && value >= 0)
                 {
-                    if (fourThreads.IsChecked != true)
-                    {
-                        if (eightThreads.IsChecked != true)
-                        {
-                            return false;
-                        }
-                    }
+                    threadsSlider.Value = value;
+                }
+                else
+                {
+                    OutOfRangeMessageBox();
+                    ResetSliderAndTextBox();
                 }
             }
-
-            return true;
         }
 
         #endregion
 
         #region TextBlock
-        
+
         private void SetOutputTextBlockContent(string content)
         {
             outputTextBlock.Text = content;
+        }
+
+        private void SetThreadsTextBlockContent(double value = 0.0)
+        {
+            threadsTextBox.Text = value.ToString();
         }
 
         #endregion
@@ -212,6 +158,11 @@ namespace AssemblyProject
 
         #endregion
 
+        private bool CheckIfThreadsAreChoosed()
+        {
+            return (threadsSlider.Value != 0);
+        }
+
         private bool CheckIfDataIsLoaded()
         {
             return data != null;
@@ -219,7 +170,7 @@ namespace AssemblyProject
 
         private void RunApplicationMethod()
         {
-            executer = new Executer(GetSelectedLanguage(), threadsNumber, data);
+            executer = new Executer(GetSelectedLanguage(), Convert.ToInt32(threadsSlider.Value), data);
 
             executer.Execute();
 
@@ -234,6 +185,16 @@ namespace AssemblyProject
             
             FileSaver.Save(operationInfo, "wyniki.txt");
             SetOutputTextBlockContent(operationInfo);
+        }
+
+        private void ResetSliderAndTextBox(int value = 0)
+        {
+            threadsTextBox.Text = value.ToString();
+            threadsSlider.Value = value;
+        }
+        private void OutOfRangeMessageBox()
+        {
+            MessageBox.Show("Number of threads must be between 0 and 64!");
         }
     }
 }

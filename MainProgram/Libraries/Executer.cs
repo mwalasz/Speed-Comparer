@@ -18,11 +18,11 @@ namespace MainProgram.Libraries
         private readonly LoadedData dataToProcess;
 
         private readonly LibraryLanguage methodLanguage;
-        private readonly Threads threadsNumber;
+        private readonly int threadsNumber;
 
         private MatrixByScalarMultiplication methodToExecute;
 
-        public Executer(LibraryLanguage language, Threads threads, LoadedData data)
+        public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
             stopwatch = new Stopwatch();
 
@@ -53,7 +53,7 @@ namespace MainProgram.Libraries
         {
             return "Start time: " + StartTime.ToString() 
                 + "\nLanguage: " + methodLanguage.GetName()
-                + "\nThreads: " + threadsNumber.GetName()
+                + "\nThreads: " + threadsNumber.ToString()
                 + "\nTime elapsed: " + ExecutionDuration + "ms\n";
         }
 

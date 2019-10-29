@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Speed-comparer" Height="548" Width="1208">
+        Title="Speed-comparer" Height="575" Width="1208">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -143,56 +143,24 @@
                         Padding="5"
                         BorderBrush="#EAEDED">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <StackPanel
-                                Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Text="1 "/>
-                                <CheckBox 
-                                    x:Name="oneThread"
-                                    Click="threadCheckBox_Click"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                Grid.Column="1"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Text="2 "/>
-                                <CheckBox
-                                    x:Name="twoThreads"
-                                    Click="threadCheckBox_Click"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                Grid.Column="2"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Text="4 "/>
-                                <CheckBox
-                                    x:Name="fourThreads"
-                                    Click="threadCheckBox_Click"/>
-                            </StackPanel>
-
-                            <StackPanel
-                                Grid.Column="3"
-                                HorizontalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    Text="8 "/>
-                                <CheckBox 
-                                    x:Name="eightThreads"
-                                    Click="threadCheckBox_Click"/>
-                            </StackPanel>
+                            <DockPanel 
+                                VerticalAlignment="Center"
+                                Margin="10">
+                                <TextBox 
+                                    x:Name="threadsTextBox"
+                                    KeyDown="threadsTextBox_KeyDown"
+                                    Margin="10 0 0 0"
+                                    DockPanel.Dock="Right"
+                                    TextAlignment="Right"
+                                    Width="40" />
+                                <Slider 
+                                    x:Name="threadsSlider" 
+                                    Maximum="64"
+                                    TickPlacement="BottomRight"
+                                    TickFrequency="1"
+                                    IsSnapToTickEnabled="True"
+                                    ValueChanged="Slider_ValueChanged"/>
+                            </DockPanel>
                         </Grid>
                     </Border>
                 </StackPanel>

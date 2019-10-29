@@ -17,22 +17,5 @@ namespace MainProgram.Extensions
                     return string.Empty;
             }
         }
-
-        public static string GetName(this Threads threads)
-        {
-            switch (threads)
-            {
-                case Threads.One:
-                    return "1";
-                case Threads.Two:
-                    return "2";
-                case Threads.Four:
-                    return "4";
-                case Threads.Eight:
-                    return "8";
-                default:
-                    return string.Empty;
-            }
-        }
     }
 }
