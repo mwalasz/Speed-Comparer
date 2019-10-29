@@ -1,23 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace MainProgram.Files
 {
     public class FileSaver
     {
-        public string FileName { get; set; }
-
-        public FileSaver()
+        public static void Save(string data, string fileName)
         {
+            data += "\n";
 
-        }
+            var currentDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
 
-        public FileSaver(string fileName)
-        {
-            FileName = fileName;
+            using StreamWriter outputFile = File.AppendText(Path.Combine(currentDirectory, fileName));
+            
+            outputFile.WriteLine(data);
         }
     }
 }

@@ -222,10 +222,18 @@ namespace AssemblyProject
             executer = new Executer(GetSelectedLanguage(), threadsNumber, data);
 
             executer.Execute();
-            
+
+            SaveOperationResultAndUpdateGui();
+        }
+
+        private void SaveOperationResultAndUpdateGui()
+        {
             finalMatrix.Text = executer.Result.ToString();
             
-            SetOutputTextBlockContent(executer.RetrieveExectionInfo());
+            var operationInfo = executer.RetrieveExectionInfo();
+            
+            FileSaver.Save(operationInfo, "wyniki.txt");
+            SetOutputTextBlockContent(operationInfo);
         }
     }
 }
