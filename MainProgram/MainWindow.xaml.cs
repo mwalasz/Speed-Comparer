@@ -3,6 +3,7 @@ using MainProgram.Libraries;
 using MainProgram.Maths;
 using MainProgram.Utils;
 using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -114,15 +115,18 @@ namespace AssemblyProject
         {
             if (e.Key == System.Windows.Input.Key.Enter)
             {
-                double value = Convert.ToDouble(threadsTextBox.Text);
-
-                if (value <= 64 && value >= 0)
+                if (!threadsTextBox.Text.Any(Char.IsLetter))
                 {
-                    threadsSlider.Value = value;
+                    double value = Convert.ToDouble(threadsTextBox.Text);
+
+                    if (value <= ThreadsNumber.Max && value >= ThreadsNumber.Min)
+                    {
+                        threadsSlider.Value = value;
+                    }
                 }
                 else
                 {
-                    OutOfRangeMessageBox();
+                    WrongThreadNumberInputMessage();
                     ResetSliderAndTextBox();
                 }
             }
@@ -192,9 +196,9 @@ namespace AssemblyProject
             threadsTextBox.Text = value.ToString();
             threadsSlider.Value = value;
         }
-        private void OutOfRangeMessageBox()
+        private void WrongThreadNumberInputMessage()
         {
-            MessageBox.Show("Number of threads must be between 0 and 64!");
+            MessageBox.Show("Number of threads must be between 0 and 64.\n Cannot contain any letter!");
         }
     }
 }

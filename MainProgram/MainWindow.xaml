@@ -151,8 +151,10 @@
                                     KeyDown="threadsTextBox_KeyDown"
                                     Margin="10 0 0 0"
                                     DockPanel.Dock="Right"
-                                    TextAlignment="Right"
-                                    Width="40" />
+                                    HorizontalContentAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    MaxLength="2"
+                                    Width="25" />
                                 <Slider 
                                     x:Name="threadsSlider" 
                                     Maximum="64"
