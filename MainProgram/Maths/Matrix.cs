@@ -5,8 +5,7 @@ namespace MainProgram.Maths
 {
     public class Matrix
     {
-        private readonly float[,] content;
-
+        public float[,] Content { get; set; }
         public int Columns { get; set; }
         public int Rows { get; set; }
 
@@ -15,7 +14,7 @@ namespace MainProgram.Maths
             Rows = rows;
             Columns = columns;
 
-            content = new float[Rows, Columns];
+            Content = new float[Rows, Columns];
         }
 
         public Matrix(float[,] matrix)
@@ -23,7 +22,7 @@ namespace MainProgram.Maths
             Rows = matrix.GetLength(0);
             Columns = matrix.GetLength(1);
 
-            content = matrix;
+            Content = matrix;
         }
 
         public Matrix MultiplyByScalar(Scalar scalar)
@@ -32,16 +31,16 @@ namespace MainProgram.Maths
             {
                 for (int j = 0; j < Columns; j++)
                 {
-                    content[i, j] = content[i, j] * scalar.Value;
+                    Content[i, j] = Content[i, j] * scalar.Value;
                 }
             }
 
-            return new Matrix(content);
+            return new Matrix(Content);
         }
 
         public override string ToString()
         {
-            var numbers = content.Cast<float>()
+            var numbers = Content.Cast<float>()
                 .Select(i => i.ToString())
                 .ToArray();
 

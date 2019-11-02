@@ -2,6 +2,7 @@
 using MainProgram.Extensions;
 using MainProgram.Files;
 using MainProgram.Libraries.AssemblyWrapper;
+using MainProgram.Threads;
 using System;
 using System.Diagnostics;
 using System.Windows;
@@ -16,6 +17,7 @@ namespace MainProgram.Libraries
 
         private readonly Stopwatch stopwatch;
         private readonly LoadedData dataToProcess;
+        private ThreadsHandler threadsHandler;
 
         private readonly LibraryLanguage methodLanguage;
         private readonly int threadsNumber;
@@ -24,11 +26,12 @@ namespace MainProgram.Libraries
 
         public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
-            stopwatch = new Stopwatch();
-
             methodLanguage = language;
             threadsNumber = threads;
             dataToProcess = data;
+
+            stopwatch = new Stopwatch();
+            threadsHandler = new ThreadsHandler(threadsNumber, dataToProcess);
         }
 
         private delegate int MatrixByScalarMultiplication();
@@ -38,8 +41,10 @@ namespace MainProgram.Libraries
             try
             {
                 ChooseMethodToUse();
+                PrepareThreads();
                 
                 StartTimeMeasuring();
+                threadsHandler.WaitForThreads();
                 Result = methodToExecute();
                 StopTimeMeasuring();
             }
@@ -67,6 +72,15 @@ namespace MainProgram.Libraries
         {
             stopwatch.Stop();
             ExecutionDuration = stopwatch.ElapsedMilliseconds;
+        }
+
+        private void PrepareThreads()
+        {
+            Action dg = () => {
+            };
+
+            threadsHandler.CreateThreads(dg);
+            threadsHandler.StartThreads();
         }
 
         private void ChooseMethodToUse()
