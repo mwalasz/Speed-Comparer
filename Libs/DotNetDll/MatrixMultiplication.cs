@@ -6,5 +6,10 @@
         {
             return 111;
         }
+
+        public static void ActionTest(object args)
+        {
+            DllArgs arguments = (DllArgs)args;
+        }
     }
 }

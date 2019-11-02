@@ -1,10 +1,8 @@
 ﻿using MainProgram.Files;
 using MainProgram.Extensions;
-using System.Collections.Generic;
-using System.Linq;
-using MainProgram.Libraries;
 using System;
 using System.Threading.Tasks;
+using DotNetDll;
 
 namespace MainProgram.Threads
 {
@@ -26,7 +24,7 @@ namespace MainProgram.Threads
             tasks = new Task[threadsNumber];
         }
         
-        public void CreateThreads(Action methodToExecute)
+        public void CreateThreads(Action<object> methodToExecute)
         {
             int numberOfNumbers = (bytesData.Length / 4);
 
@@ -52,7 +50,8 @@ namespace MainProgram.Threads
                     stop += rest * 4;
 
                 libraryArguments[i] = new DllArgs { Start = start, Stop = stop, Data = bytesData };
-                tasks[i] = new Task(methodToExecute);
+                int tempId = i;
+                tasks[i] = new Task(() => methodToExecute(libraryArguments[tempId]));
             }
         }
 

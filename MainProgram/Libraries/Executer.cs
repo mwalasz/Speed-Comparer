@@ -23,6 +23,7 @@ namespace MainProgram.Libraries
         private readonly int threadsNumber;
 
         private MatrixByScalarMultiplication methodToExecute;
+        private Action<object> method;
 
         public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
@@ -40,12 +41,11 @@ namespace MainProgram.Libraries
         {
             try
             {
-                ChooseMethodToUse();
-                PrepareThreads();
-                
+                ChooseLibraryAndPrepareThreads();
+
                 StartTimeMeasuring();
-                threadsHandler.WaitForThreads();
-                Result = methodToExecute();
+                RunMethod();
+                //Result = methodToExecute();
                 StopTimeMeasuring();
             }
             catch (Exception e)
@@ -74,16 +74,13 @@ namespace MainProgram.Libraries
             ExecutionDuration = stopwatch.ElapsedMilliseconds;
         }
 
-        private void PrepareThreads()
+        private void RunMethod()
         {
-            Action dg = () => {
-            };
-
-            threadsHandler.CreateThreads(dg);
             threadsHandler.StartThreads();
+            threadsHandler.WaitForThreads();
         }
 
-        private void ChooseMethodToUse()
+        private void ChooseLibraryAndPrepareThreads()
         {
             switch (methodLanguage)
             {
@@ -92,9 +89,12 @@ namespace MainProgram.Libraries
                     break;
 
                 case LibraryLanguage.CSharp:
+                    method = MatrixMultiplication.ActionTest;
                     methodToExecute = MatrixMultiplication.ImplementationTest;
                     break;
             }
+
+            threadsHandler.CreateThreads(method);
         }
     }
 }

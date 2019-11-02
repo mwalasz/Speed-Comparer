@@ -1,4 +1,4 @@
-﻿namespace MainProgram.Libraries
+﻿namespace DotNetDll
 {
     public class DllArgs
     {
