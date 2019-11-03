@@ -1,5 +1,4 @@
 ﻿using MainProgram.Files;
-using MainProgram.Extensions;
 using System;
 using System.Threading.Tasks;
 using DotNetDll;
@@ -13,9 +12,12 @@ namespace MainProgram.Threads
         
         private DllArgs[] libraryArguments;
         private Task[] tasks;
+        private float[] scalar;
 
         public ThreadsHandler(int threads, LoadedData data)
         {
+            scalar = new float[]{ data.Scalar.Value };
+            
             threadsNumber = threads;
             bytesData = data.Matrix.Content.ToOneDimensional()
                 .ToByteArray();
@@ -44,12 +46,13 @@ namespace MainProgram.Threads
             for (int i = 0; i < iterations; i++)
             {
                 var start = (i * interval);
-                var stop = (start + (interval - 1));
+                var stop = (i + 1) * interval;
+                //var stop = (start + (interval - 1));
 
-                if (!numbersAreFewerThanThreads && i == threadsNumber - 1)
-                    stop += rest * 4;
+                //if (!numbersAreFewerThanThreads && i == threadsNumber - 1)
+                //    stop += rest * 4;
 
-                libraryArguments[i] = new DllArgs { Start = start, Stop = stop, Data = bytesData };
+                libraryArguments[i] = new DllArgs { Start = start, Stop = stop, Matrix = bytesData, Scalar = scalar.ToByteArray() };
                 int tempId = i;
                 tasks[i] = new Task(() => methodToExecute(libraryArguments[tempId]));
             }
@@ -64,6 +67,11 @@ namespace MainProgram.Threads
         public void WaitForThreads()
         {
             Task.WaitAll(tasks);
+        }
+
+        public float[] GetResults()
+        {
+            return libraryArguments[0].Matrix.ToFloatArray();
         }
     }
 }

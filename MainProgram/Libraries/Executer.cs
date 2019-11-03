@@ -11,7 +11,7 @@ namespace MainProgram.Libraries
 {
     public class Executer
     {
-        public int Result { get; set; }
+        public float[] Result { get; set; }
         public long ExecutionDuration { get; set; }
         public DateTime StartTime { get; set; }
 
@@ -45,8 +45,9 @@ namespace MainProgram.Libraries
 
                 StartTimeMeasuring();
                 RunMethod();
-                //Result = methodToExecute();
                 StopTimeMeasuring();
+
+                SaveResults();
             }
             catch (Exception e)
             {
@@ -60,6 +61,11 @@ namespace MainProgram.Libraries
                 + "\nLanguage: " + methodLanguage.GetName()
                 + "\nThreads: " + threadsNumber.ToString()
                 + "\nTime elapsed: " + ExecutionDuration + "ms\n";
+        }
+
+        private void SaveResults()
+        {
+            Result = threadsHandler.GetResults();
         }
 
         private void StartTimeMeasuring()

@@ -1,4 +1,5 @@
-﻿using MainProgram.Files;
+﻿using MainProgram.Extensions;
+using MainProgram.Files;
 using MainProgram.Libraries;
 using MainProgram.Maths;
 using MainProgram.Utils;
@@ -104,11 +105,6 @@ namespace AssemblyProject
             logicalProcessorsNumber.Text = SystemInfo.GetNumberOfLogicalProcessors();
         }
 
-        private void SetOutputDataTextBoxesContent(Matrix resultMatrix)
-        {
-            finalMatrix.Text = resultMatrix.ToString();
-        }
-
         private void threadsTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
@@ -181,9 +177,9 @@ namespace AssemblyProject
 
         private void SaveOperationResultAndUpdateGui()
         {
-            finalMatrix.Text = executer.Result.ToString();
-            
             var operationInfo = executer.RetrieveExectionInfo();
+            
+            finalMatrix.Text = executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
             
             FileSaver.Save(operationInfo, "wyniki.txt");
             SetOutputTextBlockContent(operationInfo);

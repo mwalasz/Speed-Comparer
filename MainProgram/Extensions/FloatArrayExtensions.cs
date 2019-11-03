@@ -1,30 +1,38 @@
-﻿using System;
+﻿using MainProgram.Exceptions;
 using System.Linq;
 
 namespace MainProgram.Extensions
 {
     public static class FloatArrayExtensions
     {
-        public static float[] ToOneDimensional(this float[,] src)
+        public static string ToString(this float[] src, int rows, int cols)
         {
-            return src.Cast<float>()
-                .ToArray();
-        }
+            string destination = string.Empty;
+            string line = string.Empty;
 
-        public static byte[] ToByteArray(this float[] src)
-        {
-            var dst = new byte[src.Length * 4];
-            Buffer.BlockCopy(src, 0, dst, 0, dst.Length);
+            if (rows * cols != src.Length)
+                throw new WrongInputDimensionsException();
 
-            return dst;
-        }
+            int counter = cols;
 
-        public static float[] ToFloatArray(this byte[] src)
-        {
-            var dst = new float[src.Length / 4];
-            Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+            foreach (var number in src)
+            {
+                line += (number.ToString() + " ");
+                counter--;
 
-            return dst;
+                if (counter.Equals(0))
+                {
+                    destination += (line + "\n");
+                    counter = cols;
+
+                    line = string.Empty;
+                }
+
+                if (src.Last() == number)
+                    break;
+            }
+
+            return destination;
         }
     }
 }
