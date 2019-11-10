@@ -51,7 +51,10 @@ namespace AssemblyProject
         private void runAppButton_Click(object sender, RoutedEventArgs e)
         {
             if (CheckIfAllConditionsAreMet())
+            {
                 RunApplicationMethod();
+                SaveOperationResultAndUpdateGui();
+            }
         }
 
         private void loadDataButton_Click(object sender, RoutedEventArgs e)
@@ -66,6 +69,51 @@ namespace AssemblyProject
             else
             {
                 MessageBox.Show("Choose .txt file in searchbox!");
+            }
+        }
+
+        private void runStatisticsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (CheckIfDataIsLoaded())
+            {
+                var threadsToRunOn = new int[] { 1, 2, 4, 8, 16, 32, 64 };
+                var description = RunStatisticsAndGetInfo(threadsToRunOn, false);
+
+                FileSaver.SaveAndOpen(description);
+            }
+            else
+            {
+                MessageBox.Show("Load any data to start statistics!");
+            }
+        }
+
+        private string RunStatisticsAndGetInfo(int[] threads, bool runAssembly)
+        {
+            languageComboBox.SelectedIndex = (int)LibraryLanguage.CPlusPlus;
+
+            string description = "Language: " + GetSelectedLanguage().GetName() + ":\n";
+            RunStatistics(threads, ref description);
+
+            if (runAssembly)
+            {
+                languageComboBox.SelectedIndex = (int)LibraryLanguage.Assembly;
+
+                description += "\nLanguage: " + GetSelectedLanguage().GetName() + ":\n";
+                RunStatistics(threads, ref description);
+            }
+
+            description += "\n\nResult: \n" + executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
+            
+            return description;
+        }
+
+        private void RunStatistics(int[] threads, ref string description)
+        {
+            foreach (var t in threads)
+            {
+                threadsSlider.Value = t;
+                RunApplicationMethod();
+                description += executer.RetrieveStatisticsInfo();
             }
         }
 
@@ -158,8 +206,6 @@ namespace AssemblyProject
             executer = new Executer(GetSelectedLanguage(), Convert.ToInt32(threadsSlider.Value), data);
 
             executer.Execute();
-
-            SaveOperationResultAndUpdateGui();
         }
 
         private void SaveOperationResultAndUpdateGui()

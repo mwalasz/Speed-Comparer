@@ -62,6 +62,13 @@ namespace MainProgram.Libraries
                 + "\nTime elapsed: " + ExecutionDuration + "ms\n";
         }
 
+        public string RetrieveStatisticsInfo()
+        {
+            return threadsNumber.ToString() 
+                + "threads ran in " 
+                + ExecutionDuration + "ms\n";
+        }
+
         private void SaveResults()
         {
             Result = threadsHandler.GetResults();

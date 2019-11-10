@@ -11,10 +11,10 @@ namespace MainProgram.Threads
     public class ThreadsHandler
     {
         private readonly int threadsNumber;
-        private readonly Task[] tasks;
         private readonly float scalar;
 
         private float[] floatArrayData;
+        private Task[] tasks;
         private DllArgs[] libraryArguments;
 
         public ThreadsHandler(int threads, LoadedData data)
@@ -23,8 +23,6 @@ namespace MainProgram.Threads
             
             threadsNumber = threads;
             floatArrayData = data.Matrix.Content.ToOneDimensional();
-            
-            tasks = new Task[threadsNumber];
         }
         
         public void CreateThreads(Action<float[], float, int> methodToExecute)
@@ -34,7 +32,8 @@ namespace MainProgram.Threads
             int restOfNumbers = numberOfNumbers % threadsNumber;
             int numbersToProcess = 1;
             int threads = (threadsNumber <= numberOfNumbers) ? threadsNumber : numberOfNumbers;
-
+            
+            tasks = new Task[threads];
             libraryArguments = new DllArgs[threads];
 
             for (int i = 0; i < threads; i++)

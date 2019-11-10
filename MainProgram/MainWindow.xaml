@@ -114,9 +114,9 @@
                         x:Name="languageComboBox"
                         SelectedIndex="0"
                         HorizontalContentAlignment="Center">
-                            <ComboBoxItem></ComboBoxItem>
-                            <ComboBoxItem>Assembly</ComboBoxItem>
-                            <ComboBoxItem>C++</ComboBoxItem>
+                        <ComboBoxItem></ComboBoxItem>
+                        <ComboBoxItem>Assembly</ComboBoxItem>
+                        <ComboBoxItem>C++</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
             </Border>
@@ -215,38 +215,52 @@
             </Border>
 
             <!--buttons-->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <!--load button-->
-                <Button
-                    Grid.Column="0"
-                    x:Name="loadDataButton"
-                    Click="loadDataButton_Click"
-                    Background="PaleVioletRed"
-                    Margin="0 0 0 0"
-                    HorizontalAlignment="Right"
-                    Width="95">
-                    <TextBlock
-                        Text="load data"/>
-                </Button>
-                
-                <!--run button-->
-                <Button
-                    Grid.Column="1"
-                    x:Name="runAppButton"
-                    Click="runAppButton_Click"
-                    Background="GreenYellow"
-                    Margin="0 0 10 0"
-                    HorizontalAlignment="Right"
-                    Width="95">
-                    <TextBlock
-                        Text="run app"/>
-                </Button>
-            </Grid>
+                    <!--load button-->
+                    <Button
+                        Grid.Column="0"
+                        x:Name="loadDataButton"
+                        Click="loadDataButton_Click"
+                        Background="PaleVioletRed"
+                        Margin="0 0 0 0"
+                        HorizontalAlignment="Right"
+                        Width="95">
+                        <TextBlock
+                            Text="load data"/>
+                    </Button>
+
+                    <!--run button-->
+                    <Button
+                        Grid.Column="1"
+                        x:Name="runAppButton"
+                        Click="runAppButton_Click"
+                        Background="GreenYellow"
+                        Margin="0 0 10 0"
+                        HorizontalAlignment="Right"
+                        Width="95">
+                        <TextBlock
+                            Text="run app"/>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <!--load button-->
+                    <Button
+                        x:Name="runStatisticsButton"
+                        Click="runStatisticsButton_Click"
+                        Margin="0,5,0,-5"
+                        Width="95"
+                        HorizontalAlignment="Center">
+                        <TextBlock
+                            Text="run statistics"/>
+                    </Button>
+                </Grid>
+            </StackPanel>
         </StackPanel>
 
         <GridSplitter 
@@ -258,7 +272,7 @@
             Grid.Column="2"
             Margin="10"
             HorizontalAlignment="Stretch">
-            
+
             <!--header-->
             <TextBlock 
                 Text="Input data"
@@ -267,7 +281,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 TextWrapping="Wrap"/>
-            
+
             <!--body-->
             <Border 
                 BorderThickness="3"
@@ -288,7 +302,7 @@
                         VerticalAlignment="Center"
                         HorizontalAlignment="Center"/>
 
-                        <!--x sign-->
+                    <!--x sign-->
                     <TextBlock
                         x:Name="multiplySign"
                         Text="X"
@@ -318,7 +332,7 @@
             Grid.Column="4"
             Margin="10"
             HorizontalAlignment="Stretch">
-            
+
             <!--header-->
             <TextBlock 
                 Text="Output data"
@@ -327,14 +341,14 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 TextWrapping="Wrap"/>
-            
+
             <!--body-->
             <Border 
                 BorderThickness="3"
                 Margin="10"
                 Padding="10"
                 BorderBrush="#EAEDED" Height="417">
-                
+
                 <StackPanel>
                     <!--final matrix-->
                     <TextBlock
