@@ -1,60 +1,52 @@
-﻿using MainProgram.Files;
+﻿using MainProgram.Extensions;
+using MainProgram.Files;
+using MainProgram.Utils;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using DotNetDll;
 
 namespace MainProgram.Threads
 {
     public class ThreadsHandler
     {
         private readonly int threadsNumber;
-        private byte[] bytesData;
-        
+        private readonly Task[] tasks;
+        private readonly float scalar;
+
+        private float[] floatArrayData;
         private DllArgs[] libraryArguments;
-        private Task[] tasks;
-        private float[] scalar;
 
         public ThreadsHandler(int threads, LoadedData data)
         {
-            scalar = new float[]{ data.Scalar.Value };
+            scalar = data.Scalar.Value;
             
             threadsNumber = threads;
-            bytesData = data.Matrix.Content.ToOneDimensional()
-                .ToByteArray();
-
-            libraryArguments = new DllArgs[threadsNumber];
+            floatArrayData = data.Matrix.Content.ToOneDimensional();
+            
             tasks = new Task[threadsNumber];
         }
         
-        public void CreateThreads(Action<object> methodToExecute)
+        public void CreateThreads(Action<float[], float, int> methodToExecute)
         {
-            int numberOfNumbers = (bytesData.Length / 4);
+            int numberOfNumbers = floatArrayData.Length;
+            int numbersPerThread = numberOfNumbers / threadsNumber;
+            int restOfNumbers = numberOfNumbers % threadsNumber;
+            int numbersToProcess = 1;
+            int threads = (threadsNumber <= numberOfNumbers) ? threadsNumber : numberOfNumbers;
 
-            int interval = bytesData.Length / threadsNumber;
-            int rest = numberOfNumbers % threadsNumber;
+            libraryArguments = new DllArgs[threads];
 
-            int iterations = threadsNumber;
-            bool numbersAreFewerThanThreads = false;
-
-            if (numberOfNumbers < threadsNumber)
+            for (int i = 0; i < threads; i++)
             {
-                interval = 4;
-                iterations = numberOfNumbers;
-                numbersAreFewerThanThreads = true;
-            }
-
-            for (int i = 0; i < iterations; i++)
-            {
-                var start = (i * interval);
-                var stop = (i + 1) * interval;
-                //var stop = (start + (interval - 1));
-
-                //if (!numbersAreFewerThanThreads && i == threadsNumber - 1)
-                //    stop += rest * 4;
-
-                libraryArguments[i] = new DllArgs { Start = start, Stop = stop, Matrix = bytesData, Scalar = scalar.ToByteArray() };
                 int tempId = i;
-                tasks[i] = new Task(() => methodToExecute(libraryArguments[tempId]));
+
+                if (threads == threadsNumber)
+                    numbersToProcess = (restOfNumbers-- > 0) ? numbersPerThread + 1 : numbersPerThread;
+
+                libraryArguments[tempId] = new DllArgs { Length = numbersToProcess, Matrix = GetSubArray(ref floatArrayData, numbersToProcess), Scalar = scalar };
+                
+                tasks[tempId] = new Task(() => methodToExecute(libraryArguments[tempId].Matrix, libraryArguments[tempId].Scalar, libraryArguments[tempId].Length));
             }
         }
 
@@ -71,7 +63,25 @@ namespace MainProgram.Threads
 
         public float[] GetResults()
         {
-            return libraryArguments[0].Matrix.ToFloatArray();
+            var results = new List<float>();
+
+            foreach (var args in libraryArguments)
+                results.AddRange(args.Matrix);
+
+            floatArrayData = results.ToArray();
+
+            return floatArrayData;
+        }
+
+        private float[] GetSubArray(ref float[] src, int numOfElements)
+        {
+            var subArray = src.Take(numOfElements)
+                .ToArray();
+
+            src = src.Skip(numOfElements)
+                .ToArray();
+
+            return subArray;
         }
     }
 }

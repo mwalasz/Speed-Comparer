@@ -1,7 +1,6 @@
 ﻿using MainProgram.Extensions;
 using MainProgram.Files;
 using MainProgram.Libraries;
-using MainProgram.Maths;
 using MainProgram.Utils;
 using System;
 using System.Linq;
@@ -12,6 +11,8 @@ namespace AssemblyProject
 {
     public partial class MainWindow : Window
     {
+        private const string DefaultSearchBoxContent = @"D:\Studia\programowanie\Speed-Comparer\MainProgram\testSmall.txt";
+        
         private LoadedData data;
         private Executer executer;
 
@@ -20,6 +21,7 @@ namespace AssemblyProject
             InitializeComponent();
             SetSystemInfoTextBoxesContent();
             SetThreadsTextBlockContent();
+            SetDataInputTextBlockContent();
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -48,28 +50,8 @@ namespace AssemblyProject
 
         private void runAppButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CheckIfAnyLanguageIsSelected())
-            {
-                if (CheckIfDataIsLoaded())
-                {
-                    if (CheckIfThreadsAreChoosed())
-                    {
-                        RunApplicationMethod();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Choose number of threads to run program on!");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Load any data to process!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Choose library language!");
-            }
+            if (CheckIfAllConditionsAreMet())
+                RunApplicationMethod();
         }
 
         private void loadDataButton_Click(object sender, RoutedEventArgs e)
@@ -140,6 +122,11 @@ namespace AssemblyProject
             threadsTextBox.Text = value.ToString();
         }
 
+        private void SetDataInputTextBlockContent()
+        {
+            searchBox.Text = DefaultSearchBoxContent;
+        }
+
         #endregion
 
         #region ComboBox
@@ -194,6 +181,34 @@ namespace AssemblyProject
         private void WrongThreadNumberInputMessage()
         {
             MessageBox.Show("Number of threads must be between 0 and 64.\n It cannot contain any letter!");
+        }
+
+        private bool CheckIfAllConditionsAreMet()
+        {
+            if (CheckIfAnyLanguageIsSelected())
+            {
+                if (CheckIfDataIsLoaded())
+                {
+                    if (CheckIfThreadsAreChoosed())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Choose number of threads to run program on!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Load any data to process!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Choose library language!");
+            }
+
+            return false;
         }
     }
 }

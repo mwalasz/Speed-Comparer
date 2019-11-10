@@ -19,13 +19,5 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Libs\AssemblyDll\AssemblyDll.vcxproj" />
-    <ProjectReference Include="..\Libs\DotNetDll\DotNetDll.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DotNetDll">
-      <HintPath>..\Libs\DotNetDll\bin\x86\Debug\netstandard2.1\DotNetDll.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

@@ -116,7 +116,7 @@
                         HorizontalContentAlignment="Center">
                             <ComboBoxItem></ComboBoxItem>
                             <ComboBoxItem>Assembly</ComboBoxItem>
-                            <ComboBoxItem>C#</ComboBoxItem>
+                            <ComboBoxItem>C++</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
             </Border>

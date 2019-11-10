@@ -3,6 +3,6 @@
     public enum LibraryLanguage
     {
         Assembly = 1,
-        CSharp
+        CPlusPlus
     }
 }

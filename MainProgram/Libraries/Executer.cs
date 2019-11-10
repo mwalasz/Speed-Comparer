@@ -1,7 +1,7 @@
-﻿using DotNetDll;
-using MainProgram.Extensions;
+﻿using MainProgram.Extensions;
 using MainProgram.Files;
 using MainProgram.Libraries.AssemblyWrapper;
+using MainProgram.Libraries.CPlusPlusMethodWrapper;
 using MainProgram.Threads;
 using System;
 using System.Diagnostics;
@@ -22,8 +22,7 @@ namespace MainProgram.Libraries
         private readonly LibraryLanguage methodLanguage;
         private readonly int threadsNumber;
 
-        private MatrixByScalarMultiplication methodToExecute;
-        private Action<object> method;
+        private Action<float[], float, int> methodToExecute;
 
         public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
@@ -91,16 +90,14 @@ namespace MainProgram.Libraries
             switch (methodLanguage)
             {
                 case LibraryLanguage.Assembly:
-                    methodToExecute = AssemblyMethodWrapper.AsmVal;
                     break;
 
-                case LibraryLanguage.CSharp:
-                    method = MatrixMultiplication.ActionTest;
-                    methodToExecute = MatrixMultiplication.ImplementationTest;
+                case LibraryLanguage.CPlusPlus:
+                    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.test;
                     break;
             }
 
-            threadsHandler.CreateThreads(method);
+            threadsHandler.CreateThreads(methodToExecute);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MainProgram.Libraries;
-using MainProgram.Utils;
 
 namespace MainProgram.Extensions
 {
@@ -11,8 +10,8 @@ namespace MainProgram.Extensions
             {
                 case LibraryLanguage.Assembly:
                     return "Assembly";
-                case LibraryLanguage.CSharp:
-                    return "C#";
+                case LibraryLanguage.CPlusPlus:
+                    return "C++";
                 default:
                     return string.Empty;
             }

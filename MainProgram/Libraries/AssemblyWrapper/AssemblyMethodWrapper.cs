@@ -2,7 +2,7 @@
 
 namespace MainProgram.Libraries.AssemblyWrapper
 {
-    public static class AssemblyMethodWrapper
+    public class AssemblyMethodWrapper
     {
         private const string PathToDll = @"D:\Studia\programowanie\Speed-Comparer\Libs\AssemblyDll\Debug\AssemblyDll.dll";
 

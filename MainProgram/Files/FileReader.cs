@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows;
 
 namespace MainProgram.Files
 {
@@ -28,7 +29,7 @@ namespace MainProgram.Files
             }
             catch (Exception e)
             {
-                throw e;
+                MessageBox.Show(e.Message, "Exception: " + e.HResult);
             }
         }
 
