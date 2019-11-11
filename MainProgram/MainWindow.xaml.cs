@@ -16,6 +16,8 @@ namespace AssemblyProject
         private LoadedData data;
         private Executer executer;
 
+        private bool averageStatistics;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -102,18 +104,32 @@ namespace AssemblyProject
                 RunStatistics(threads, ref description);
             }
 
-            description += "\n\nResult: \n" + executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
+            //description += "\n\nResult: \n" + executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
             
             return description;
         }
 
         private void RunStatistics(int[] threads, ref string description)
         {
-            foreach (var t in threads)
+            if (averageStatistics)
             {
-                threadsSlider.Value = t;
-                RunApplicationMethod();
-                description += executer.RetrieveStatisticsInfo();
+                foreach (var t in threads)
+                {
+                    threadsSlider.Value = t;
+
+                    executer = new Executer(GetSelectedLanguage(), t, data);
+                    description += executer.Execute(5);
+                }
+            }
+            else
+            {
+                foreach (var t in threads)
+                {
+                    threadsSlider.Value = t;
+
+                    RunApplicationMethod();
+                    description += executer.RetrieveStatisticsInfo();
+                }
             }
         }
 
@@ -123,10 +139,19 @@ namespace AssemblyProject
 
         private void SetInputDataTextBoxesContent()
         {
-            matrixInputBox.Text = data.Matrix.ToString();
-            scalarInputBox.Text = data.Scalar.Value.ToString();
+            if (data.Matrix.Columns <= 20 || data.Matrix.Rows <= 20)
+            {
+                matrixInputBox.Text = data.Matrix.ToString();
+                scalarInputBox.Text = data.Scalar.Value.ToString();
 
-            multiplySign.Visibility = Visibility.Visible;
+                multiplySign.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                multiplySign.Visibility = Visibility.Hidden;
+                scalarInputBox.Text = string.Empty;
+                matrixInputBox.Text = "Data loaded, but matrix is too big to be displayed.";
+            }
         }
 
         private void SetSystemInfoTextBoxesContent()
@@ -212,9 +237,11 @@ namespace AssemblyProject
         {
             var operationInfo = executer.RetrieveExectionInfo();
             
-            finalMatrix.Text = executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
-            
-            FileSaver.Save(operationInfo, "wyniki.txt");
+            if (data.Matrix.Columns >= 20 || data.Matrix.Rows >= 20)
+                finalMatrix.Text = executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
+            else finalMatrix.Text = "Data successfully processed, but matrix is too big to be displayed.";
+
+            //FileSaver.Save(operationInfo, "wyniki.txt");
             SetOutputTextBlockContent(operationInfo);
         }
 
@@ -255,6 +282,12 @@ namespace AssemblyProject
             }
 
             return false;
+        }
+
+        private void averageCheckbox_Click(object sender, RoutedEventArgs e)
+        {
+            //averageCheckbox.IsChecked = !averageCheckbox.IsChecked;
+            averageStatistics = averageCheckbox.IsChecked ?? false;
         }
     }
 }

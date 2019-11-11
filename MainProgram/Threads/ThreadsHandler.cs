@@ -53,6 +53,8 @@ namespace MainProgram.Threads
         {
             foreach (var task in tasks)
                 task.Start();
+
+            //Parallel.ForEach(tasks, t => t.Start());
         }
 
         public void WaitForThreads()

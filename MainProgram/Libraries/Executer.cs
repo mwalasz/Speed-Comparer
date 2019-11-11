@@ -1,9 +1,8 @@
 ﻿using MainProgram.Extensions;
 using MainProgram.Files;
-using MainProgram.Libraries.AssemblyWrapper;
-using MainProgram.Libraries.CPlusPlusMethodWrapper;
 using MainProgram.Threads;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 
@@ -12,7 +11,7 @@ namespace MainProgram.Libraries
     public class Executer
     {
         public float[] Result { get; set; }
-        public long ExecutionDuration { get; set; }
+        public double ExecutionDuration { get; set; }
         public DateTime StartTime { get; set; }
 
         private readonly Stopwatch stopwatch;
@@ -40,7 +39,8 @@ namespace MainProgram.Libraries
         {
             try
             {
-                ChooseLibraryAndPrepareThreads();
+                ChooseLibraryLanguage();
+                PrepareThreads();
 
                 StartTimeMeasuring();
                 RunMethod();
@@ -54,19 +54,50 @@ namespace MainProgram.Libraries
             }
         }
 
+        public string Execute(int repeats)
+        {
+            double timesOfExecution = 0;
+            string description = string.Empty;
+
+            for (int i = 0; i < repeats; i++)
+            {
+                try
+                {
+                    ChooseLibraryLanguage();
+                    PrepareThreads();
+
+                    StartTimeMeasuring();
+                    RunMethod();
+                    StopTimeMeasuring();
+
+                    SaveResults();
+
+                    timesOfExecution += ExecutionDuration;
+                    description += RetrieveStatisticsInfo();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Exception: " + e.HResult);
+                }
+            }
+
+            description += "\n\t average: " + (timesOfExecution / repeats).ToString("N7") + "s\n\n";
+            return description;
+        }
+
         public string RetrieveExectionInfo()
         {
             return "Start time: " + StartTime.ToString() 
                 + "\nLanguage: " + methodLanguage.GetName()
-                + "\nThreads: " + threadsNumber.ToString()
-                + "\nTime elapsed: " + ExecutionDuration + "ms\n";
+                + "\nThreads: " + threadsNumber.ToString("00")
+                + "\nTime elapsed: " + ExecutionDuration.ToString("N7") + "s\n";
         }
 
         public string RetrieveStatisticsInfo()
         {
-            return threadsNumber.ToString() 
-                + "threads ran in " 
-                + ExecutionDuration + "ms\n";
+            return threadsNumber.ToString("00") 
+                + " threads ran in " 
+                + ExecutionDuration.ToString("N7") + "s\n";
         }
 
         private void SaveResults()
@@ -83,16 +114,15 @@ namespace MainProgram.Libraries
         private void StopTimeMeasuring()
         {
             stopwatch.Stop();
-            ExecutionDuration = stopwatch.ElapsedMilliseconds;
+            ExecutionDuration = stopwatch.Elapsed.TotalSeconds;
         }
 
         private void RunMethod()
         {
-            threadsHandler.StartThreads();
             threadsHandler.WaitForThreads();
         }
 
-        private void ChooseLibraryAndPrepareThreads()
+        private void ChooseLibraryLanguage()
         {
             switch (methodLanguage)
             {
@@ -103,8 +133,12 @@ namespace MainProgram.Libraries
                     methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.test;
                     break;
             }
+        }
 
+        private void PrepareThreads()
+        {
             threadsHandler.CreateThreads(methodToExecute);
+            threadsHandler.StartThreads();
         }
     }
 }

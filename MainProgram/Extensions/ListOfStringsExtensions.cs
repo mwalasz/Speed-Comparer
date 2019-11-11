@@ -1,4 +1,5 @@
 ﻿using MainProgram.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,9 +20,15 @@ namespace MainProgram.Extensions
 
             foreach(var line in data)
             {
-                var convertedRow = line.Split(' ')
-                    .Select(number => float.Parse(number, System.Globalization.CultureInfo.InvariantCulture))
-                    .ToArray();
+                var temp = line.Split(' ');
+
+                for (int i = 0; i < temp.Length; i++)
+                    temp[i] = temp[i].Replace(',', '.');
+
+                var dupa = temp
+                    .Select(number => Convert.ToSingle(number, System.Globalization.CultureInfo.InvariantCulture));
+
+                var convertedRow = dupa.ToArray();
 
                 if (convertedRow.Length != numberOfColumns)
                     throw new MatrixDataException();
