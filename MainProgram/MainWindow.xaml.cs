@@ -63,6 +63,7 @@ namespace AssemblyProject
         {
             if (!string.IsNullOrEmpty(searchBox.Text))
             {
+
                 var fileReader = new FileReader(searchBox.Text);
                 data = fileReader.GetLoadedData();
 
@@ -103,8 +104,6 @@ namespace AssemblyProject
                 description += "\nLanguage: " + GetSelectedLanguage().GetName() + ":\n";
                 RunStatistics(threads, ref description);
             }
-
-            //description += "\n\nResult: \n" + executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
             
             return description;
         }
@@ -150,7 +149,7 @@ namespace AssemblyProject
             {
                 multiplySign.Visibility = Visibility.Hidden;
                 scalarInputBox.Text = string.Empty;
-                matrixInputBox.Text = "Data loaded, but matrix is too big to be displayed.";
+                matrixInputBox.Text = $"Data loaded, but matrix is too big to be displayed.\n ({data.Matrix.Rows}x{data.Matrix.Columns})";
             }
         }
 
@@ -237,11 +236,10 @@ namespace AssemblyProject
         {
             var operationInfo = executer.RetrieveExectionInfo();
             
-            if (data.Matrix.Columns >= 20 || data.Matrix.Rows >= 20)
+            if (data.Matrix.Columns <= 20 || data.Matrix.Rows <= 20)
                 finalMatrix.Text = executer.Result.ToString(data.Matrix.Rows, data.Matrix.Columns);
-            else finalMatrix.Text = "Data successfully processed, but matrix is too big to be displayed.";
+            else finalMatrix.Text = $"Data successfully processed, but matrix is too big to be displayed.\n ({data.Matrix.Rows}x{data.Matrix.Columns})";
 
-            //FileSaver.Save(operationInfo, "wyniki.txt");
             SetOutputTextBlockContent(operationInfo);
         }
 
@@ -288,6 +286,14 @@ namespace AssemblyProject
         {
             //averageCheckbox.IsChecked = !averageCheckbox.IsChecked;
             averageStatistics = averageCheckbox.IsChecked ?? false;
+        }
+
+        private void ChangeSpinnerVisibility()
+        {
+            if (loadingSpinner.Visibility == Visibility.Visible)
+                loadingSpinner.Visibility = Visibility.Hidden;
+            else if (loadingSpinner.Visibility == Visibility.Hidden)
+                loadingSpinner.Visibility = Visibility.Visible;
         }
     }
 }
