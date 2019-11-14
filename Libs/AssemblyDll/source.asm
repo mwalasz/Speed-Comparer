@@ -1,5 +1,6 @@
-.686
+;----------------------------------------------------------------------
 .XMM
+
 .MODEL FLAT, STDCALL
 
 OPTION CASEMAP: NONE
@@ -13,10 +14,12 @@ mov eax, TRUE
 ret
 DllEntry ENDP
 
+;----------------------------------------------------------------------
 
-AsmVal proc
-mov eax, 999
+MatrixScalarMultiplication PROC matrix: DWORD, scalar: REAL4, len: DWORD
+mov eax, 123
 ret
-AsmVal ENDP
+
+MatrixScalarMultiplication ENDP
 
 END DllEntry

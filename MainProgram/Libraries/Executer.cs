@@ -1,5 +1,6 @@
 ﻿using MainProgram.Extensions;
 using MainProgram.Files;
+using MainProgram.Libraries.AssemblyWrapper;
 using MainProgram.Threads;
 using System;
 using System.Collections.Generic;
@@ -127,10 +128,11 @@ namespace MainProgram.Libraries
             switch (methodLanguage)
             {
                 case LibraryLanguage.Assembly:
+                    methodToExecute = AssemblyMethodWrapper.MatrixScalarMultiplication;
                     break;
 
                 case LibraryLanguage.CPlusPlus:
-                    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.test;
+                    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.MatrixScalarMultiplication;
                     break;
             }
         }

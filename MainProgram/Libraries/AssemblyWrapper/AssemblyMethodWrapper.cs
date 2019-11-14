@@ -8,5 +8,8 @@ namespace MainProgram.Libraries.AssemblyWrapper
 
         [DllImport(PathToDll)]
         public static extern int AsmVal();
+
+        [DllImport(PathToDll)]
+        public static extern void MatrixScalarMultiplication(float[] matrix, float scalar, int matrixLength);
     }
 }
