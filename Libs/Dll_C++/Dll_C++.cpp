@@ -3,7 +3,7 @@
 
 extern "C" {
 	__declspec(dllexport)
-		void test(float matrix[], float scalar, int matrixLength)
+		void MatrixScalarMultiplication(float matrix[], float scalar, int matrixLength)
 	{
 		for (int i = 0; i < matrixLength; i++)
 		{
