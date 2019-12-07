@@ -8,6 +8,5 @@ namespace MainProgram.Libraries.CPlusPlusMethodWrapper
 
         [DllImport(PathToDll, CallingConvention = CallingConvention.Cdecl)]
         public static unsafe extern void MatrixScalarMultiplication(float* matrix, float scalar, int matrixLength);
-        //public static extern void MatrixScalarMultiplication(float [] matrix, byte[] scalar, int matrixLength);
     }
 }

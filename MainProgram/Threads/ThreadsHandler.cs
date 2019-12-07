@@ -48,12 +48,9 @@ namespace MainProgram.Threads
 
                 libraryArguments[tempId] = new DllArgs { Length = numbersToProcess, Matrix = GetSubArray(ref floatArrayData, numbersToProcess), Scalar = scalar };
                 
-                var dupa = libraryArguments[tempId].Matrix;
-
-                fixed (float * ptr = dupa)
+                fixed (float * ptr = libraryArguments[tempId].Matrix)
                 {
-                    tasks[tempId] = new Task(this.ChooseMethodToExecute(ptr, tempId, libraryLanguage));
-                    //tasks[tempId] = new Task(() => methodToExecute(ptr, libraryArguments[tempId].Scalar, libraryArguments[tempId].Length));
+                    tasks[tempId] = new Task(ChooseAndGetMethodToExecute(ptr, tempId, libraryLanguage));
                 }
             }
         }
@@ -68,7 +65,7 @@ namespace MainProgram.Threads
             CPlusPlusMethodWrapper.MatrixScalarMultiplication(array, scalar, length);
         }
 
-        public unsafe Action ChooseMethodToExecute(float * array, int id, LibraryLanguage libraryLanguage)
+        public unsafe Action ChooseAndGetMethodToExecute(float * array, int id, LibraryLanguage libraryLanguage)
         {
             switch (libraryLanguage)
             {

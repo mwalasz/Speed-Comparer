@@ -1,9 +1,7 @@
 ﻿using MainProgram.Extensions;
 using MainProgram.Files;
-using MainProgram.Libraries.AssemblyWrapper;
 using MainProgram.Threads;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows;
 
@@ -22,8 +20,6 @@ namespace MainProgram.Libraries
         private readonly LibraryLanguage methodLanguage;
         private readonly int threadsNumber;
 
-        private Action<float[], float, int> methodToExecute;
-
         public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
             methodLanguage = language;
@@ -40,7 +36,6 @@ namespace MainProgram.Libraries
         {
             try
             {
-                ChooseLibraryLanguage();
                 PrepareThreads();
 
                 StartTimeMeasuring();
@@ -64,7 +59,6 @@ namespace MainProgram.Libraries
             {
                 try
                 {
-                    ChooseLibraryLanguage();
                     PrepareThreads();
 
                     StartTimeMeasuring();
@@ -121,20 +115,6 @@ namespace MainProgram.Libraries
         private void RunMethod()
         {
             threadsHandler.WaitForThreads();
-        }
-
-        private void ChooseLibraryLanguage()
-        {
-            switch (methodLanguage)
-            {
-                //case LibraryLanguage.Assembly:
-                //    methodToExecute = AssemblyMethodWrapper.MatrixScalarMultiplication;
-                //    break;
-
-                //case LibraryLanguage.CPlusPlus:
-                //    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.MatrixScalarMultiplication;
-                //    break;
-            }
         }
 
         private void PrepareThreads()
