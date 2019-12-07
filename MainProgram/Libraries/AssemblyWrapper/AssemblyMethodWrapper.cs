@@ -10,6 +10,7 @@ namespace MainProgram.Libraries.AssemblyWrapper
         public static extern int AsmVal();
 
         [DllImport(PathToDll)]
-        public static extern void MatrixScalarMultiplication(float[] matrix, float scalar, int matrixLength);
+        //public unsafe static extern void MatrixScalarMultiplication(float[] matrix, byte[] scalar, int matrixLength);
+        public unsafe static extern void MatrixScalarMultiplication(float * matrix, float scalar, int matrixLength);
     }
 }

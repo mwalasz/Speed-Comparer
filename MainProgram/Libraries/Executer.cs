@@ -127,19 +127,19 @@ namespace MainProgram.Libraries
         {
             switch (methodLanguage)
             {
-                case LibraryLanguage.Assembly:
-                    methodToExecute = AssemblyMethodWrapper.MatrixScalarMultiplication;
-                    break;
+                //case LibraryLanguage.Assembly:
+                //    methodToExecute = AssemblyMethodWrapper.MatrixScalarMultiplication;
+                //    break;
 
-                case LibraryLanguage.CPlusPlus:
-                    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.MatrixScalarMultiplication;
-                    break;
+                //case LibraryLanguage.CPlusPlus:
+                //    methodToExecute = CPlusPlusMethodWrapper.CPlusPlusMethodWrapper.MatrixScalarMultiplication;
+                //    break;
             }
         }
 
         private void PrepareThreads()
         {
-            threadsHandler.CreateThreads(methodToExecute);
+            threadsHandler.CreateThreads(methodLanguage);
             threadsHandler.StartThreads();
         }
     }

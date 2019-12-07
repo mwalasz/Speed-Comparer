@@ -11,7 +11,7 @@ namespace AssemblyProject
 {
     public partial class MainWindow : Window
     {
-        private const string DefaultSearchBoxContent = @"D:\Studia\programowanie\Speed-Comparer\MainProgram\testSmall.txt";
+        private const string DefaultSearchBoxContent = @"C:\Users\Mateusz\Desktop\arr_3x3.txt";
         
         private LoadedData data;
         private Executer executer;
@@ -24,6 +24,13 @@ namespace AssemblyProject
             SetSystemInfoTextBoxesContent();
             SetThreadsTextBlockContent();
             SetDataInputTextBlockContent();
+
+
+            languageComboBox.SelectedIndex = (int)LibraryLanguage.CPlusPlus;
+            threadsSlider.Value = 1;
+            SetThreadsTextBlockContent(1);
+            loadDataButton_Click(null, null);
+            runAppButton_Click(null, null);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
