@@ -26,7 +26,7 @@ namespace AssemblyProject
             SetDataInputTextBlockContent();
 
 
-            languageComboBox.SelectedIndex = (int)LibraryLanguage.Assembly;
+            languageComboBox.SelectedIndex = (int)LibraryLanguage.CPlusPlus;
             threadsSlider.Value = 1;
             SetThreadsTextBlockContent(1);
             loadDataButton_Click(null, null);

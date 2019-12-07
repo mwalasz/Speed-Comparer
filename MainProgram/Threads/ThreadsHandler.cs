@@ -57,7 +57,7 @@ namespace MainProgram.Threads
 
         public unsafe void Assembly(float* array, float scalar, int length)
         {
-            AssemblyMethodWrapper.MatrixScalarMultiplication(array, scalar, length);
+            AssemblyMethodWrapper.asmMatrixScalarMultiplication(array, scalar, length);
         }
 
         public unsafe void CPlusPlus(float* array, float scalar, int length)
