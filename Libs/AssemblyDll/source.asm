@@ -1,24 +1,33 @@
-;----------------------------------------------------------------------
-.CODE
+.code
 
-DllEntry PROC hInstDLL: DWORD, reason: DWORD, reserved1: DWORD
-	mov rax, 1
+DllEntry proc hInstDLL: DWORD, reason: DWORD, reserved1: DWORD
+	mov RAX, 1
 	ret
-DllEntry ENDP
+DllEntry endp
+
+;----------------------------------------------------------------------
+; Arguments passed to function:
+; RCX - pointer to array of floats
+; RDX - scalar number
+; R8 - length of array of floats
 ;----------------------------------------------------------------------
 
-MatrixScalarMultiplication PROC matrix: PTR, scalar: REAL4, len: DWORD
-local skalar: DWORD
+MatrixScalarMultiplication proc
+;saving registers to stack to restore them after function execution
+	push RSI
+	push RAX
+	push RBX
+	jmp endProgram
 
-mov r11, [rcx]
-movss xmm7, xmm0
-mov ebx, skalar
-mov eax, [ebx + 1]
-mov eax, [ebx + 2]
-mov eax, [ebx + 3]
-ret
+;restoring registers to original state from before function execution
+endProgram:
+	pop	RBX
+	pop	RAX
+	pop	RSI
+	ret
 
-MatrixScalarMultiplication ENDP
+MatrixScalarMultiplication endp
 
-END
 ;----------------------------------------------------------------------
+
+end
