@@ -20,6 +20,8 @@ namespace MainProgram.Libraries
         private readonly LibraryLanguage methodLanguage;
         private readonly int threadsNumber;
 
+        private const string decimalPrecisionOfTimeExecution = "N7";
+
         public Executer(LibraryLanguage language, int threads, LoadedData data)
         {
             methodLanguage = language;
@@ -29,8 +31,6 @@ namespace MainProgram.Libraries
             stopwatch = new Stopwatch();
             threadsHandler = new ThreadsHandler(threadsNumber, dataToProcess);
         }
-
-        private delegate int MatrixByScalarMultiplication();
 
         public void Execute()
         {
@@ -76,7 +76,7 @@ namespace MainProgram.Libraries
                 }
             }
 
-            description += "\n\t average: " + (timesOfExecution / repeats).ToString("N7") + "s\n\n";
+            description += "\n\t average: " + (timesOfExecution / repeats).ToString(decimalPrecisionOfTimeExecution) + "s\n\n";
             return description;
         }
 
@@ -85,14 +85,14 @@ namespace MainProgram.Libraries
             return "Start time: " + StartTime.ToString() 
                 + "\nLanguage: " + methodLanguage.GetName()
                 + "\nThreads: " + threadsNumber.ToString("00")
-                + "\nTime elapsed: " + ExecutionDuration.ToString("N7") + "s\n";
+                + "\nTime elapsed: " + ExecutionDuration.ToString(decimalPrecisionOfTimeExecution) + "s\n";
         }
 
         public string RetrieveStatisticsInfo()
         {
             return threadsNumber.ToString("00") 
                 + " threads ran in " 
-                + ExecutionDuration.ToString("N7") + "s\n";
+                + ExecutionDuration.ToString(decimalPrecisionOfTimeExecution) + "s\n";
         }
 
         private void SaveResults()

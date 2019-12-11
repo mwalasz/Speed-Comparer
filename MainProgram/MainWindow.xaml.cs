@@ -11,7 +11,7 @@ namespace AssemblyProject
 {
     public partial class MainWindow : Window
     {
-        private const string DefaultSearchBoxContent = @"C:\Users\Mateusz\Desktop\arr_3x3.txt";
+        private const string DefaultSearchBoxContent = @"C:\Users\Mateusz\Desktop\arr_100x100.txt";
         
         private LoadedData data;
         private Executer executer;
@@ -24,13 +24,6 @@ namespace AssemblyProject
             SetSystemInfoTextBoxesContent();
             SetThreadsTextBlockContent();
             SetDataInputTextBlockContent();
-
-
-            languageComboBox.SelectedIndex = (int)LibraryLanguage.CPlusPlus;
-            threadsSlider.Value = 1;
-            SetThreadsTextBlockContent(1);
-            loadDataButton_Click(null, null);
-            runAppButton_Click(null, null);
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -291,16 +284,7 @@ namespace AssemblyProject
 
         private void averageCheckbox_Click(object sender, RoutedEventArgs e)
         {
-            //averageCheckbox.IsChecked = !averageCheckbox.IsChecked;
             averageStatistics = averageCheckbox.IsChecked ?? false;
-        }
-
-        private void ChangeSpinnerVisibility()
-        {
-            if (loadingSpinner.Visibility == Visibility.Visible)
-                loadingSpinner.Visibility = Visibility.Hidden;
-            else if (loadingSpinner.Visibility == Visibility.Hidden)
-                loadingSpinner.Visibility = Visibility.Visible;
         }
     }
 }

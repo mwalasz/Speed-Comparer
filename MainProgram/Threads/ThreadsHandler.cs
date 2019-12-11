@@ -46,7 +46,7 @@ namespace MainProgram.Threads
                 if (threads == threadsNumber)
                     numbersToProcess = (restOfNumbers-- > 0) ? numbersPerThread + 1 : numbersPerThread;
 
-                libraryArguments[tempId] = new DllArgs { Length = numbersToProcess, Matrix = GetSubArray(ref floatArrayData, numbersToProcess), Scalar = scalar };
+                libraryArguments[tempId] = new DllArgs { Length = numbersToProcess, Matrix = SplitOriginalArray(ref floatArrayData, numbersToProcess), Scalar = scalar };
                 
                 fixed (float * ptr = libraryArguments[tempId].Matrix)
                 {
@@ -101,18 +101,17 @@ namespace MainProgram.Threads
             return floatArrayData;
         }
 
-        private float[] GetSubArray(ref float[] src, int numOfElements)
+        private float[] SplitOriginalArray(ref float[] src, int numOfElements)
         {
-            var subArray = src.Take(numOfElements)
+            var subArrayFromOriginal = src.Take(numOfElements)
                 .ToArray();
 
-            var arr = new List<float>(subArray).ToArray();
+            var newArray = new List<float>(subArrayFromOriginal).ToArray();
 
             src = src.Skip(numOfElements)
                 .ToArray();
 
-            //return subArray;
-            return arr;
+            return newArray;
         }
     }
 }
