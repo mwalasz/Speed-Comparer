@@ -1,80 +1,65 @@
 .code
 
-DllEntry proc hInstDLL: DWORD, reason: DWORD, reserved1: DWORD
-	mov RAX, 1
-	ret
-DllEntry endp
-
 ;----------------------------------------------------------------------
 ; Arguments passed to function:
 ; RCX - pointer to array of floats
-; XMM0 - scalar number
+; XMM0 - scalar number to multiply for
 ; R8  - length of array of floats
-;----------------------------------------------------------------------
-; Used registers in function:
 ;----------------------------------------------------------------------
 
 MatrixScalarMultiplication proc
 
-;saving registers to stack to restore them after function execution
+	;saving registers to stack to restore them after function execution
 	push RSI
 	push RAX
 	push RBX
 	push RCX
-	PUSH R8
-	PUSH RDX
+	push R8
+	push RDX
 
-;wczytanie danych
-	mov RSI, RCX ;wczytanie wskaznika na tablice
-	mov RBX, R8  ;wczytanie dlugosci tablicy
-	mov RDX, 4  ;liczba przetwarzanych elementow tablicy
-	;vmovq xmm15, xmm0 ; za³adowanie skalaru do xmm15
-	vmovq r9, xmm0 ;wrzucenie skalaru do r9
-
-	cmp rbx, rdx		   ;porownanie liczby elementow w tablicy i 4 (liczba el do przetworzenia)
-	jb mnozenie_pojedyncze ;jesli liczba elementow w tablicy jest mniejsza niz 4, skok do mnozenia pojedynczego
-
-mnozenie_wektorowe:
-	movups xmm1, [rsi] ;za³adowanie 4 floatow do rejestru
+	mov RSI, RCX				;loading pointer to array
+	mov RBX, R8					;loading array length
+	mov RDX, 4					;saving 4 as number of numbers to process
 	
-	vpbroadcastd xmm2, xmm0 ;za³adowanie do kazdej z komorek xmm1 skalara
-	vmulps xmm1, xmm2, xmm1 ;mnozenie xmm15 * xmm1 i zapisanie do xmm15
+	cmp RBX, RDX				;comparing number of numbers to process with possible number to process (4)
+	jb single_multiplication	;if number of numbers to process is smaller than 4 then go to single_multiplication section
+									;if not starting vector_multiplication
 
-	movups [rsi], xmm1	;zapisanie wymnozonych danych
+vector_multiplication:
+	movups XMM1, [RSI]			;loading 4 float numbers from array to XMM1 register
+	vpbroadcastd XMM2, XMM0		;broadcasting scalar number to every cell of vector
+	vmulps XMM1, XMM2, XMM1		;multiplying scalar by floats from array and storing them in XMM1 register
+	movups [RSI], XMM1			;saving processed data back to array
 	
-	add rsi, 16 ;przesuniecie sie o 4 miejsca w tablicy
-	sub rbx, rdx ;odjecie 4 przerobionych elementow od rozmiaru tablicy
-	
-	cmp rbx, rdx ;porownanie liczby elementow w tablicy i 4 (liczba el do przetworzenia)
-	jae mnozenie_wektorowe ;jesli liczba elementow >= 4x
+	add RSI, 16					;moving further in array by 4 positions (float = 4 bytes, 4 number * 4 bytes = 16)
+	sub RBX, RDX				;subtracting 4 from size of the array (because of 4 processed numbers)
+	cmp RBX, RDX				;comparing number of numbers to process with possible number to process (4)
+	jae vector_multiplication	;if number of elements to process is higher than 4 then going back to vector_multiplication
+									;if not starting single_multiplication 
 
-mnozenie_pojedyncze:
-	;mov rax, [rsi] ;zaladowanie wartosci elementu do rda
-	;imul r9
-	
-	mov eax, [rsi]
-	movd xmm4, rax
-	mulss xmm4, xmm0
-	movd rax, xmm4
+single_multiplication:
+	mov RAX, [RSI]				;loading float number from array to RAX register
+	movd XMM4, RAX				;loading float number to XMM4 register
+	mulss XMM4, XMM0			;multiplying scalar by float
+	movd RAX, XMM4				;loading processed float number back to RAX register
 
-	mov [rsi], eax
-	dec rbx ;dekrementacja liczby elementow tablicy
-	add rsi, rdx ; dodanie do licznika tablicy 4 -> zeby sie przesunac w prawo do kolejnego elementu
-	cmp rbx, 0 ;sprawdzenie czy liczba elementow w tablicy wynosi 0
-	jne mnozenie_pojedyncze ;jesli nie to mnozymy dalej
+	mov [RSI], RAX				;saving processed data back to array
+	dec RBX						;decrementing size of array because of processed one element
+	add RSI, RDX				;moving further in array by 1 position
+	cmp RBX, 0					;checking if number of elements in array is equal to 0
+	jne single_multiplication	;if it is equal to 0 then end function
+									;if not going back to single_multiplication
 
-	;mov rcx, [rsi]
-endProgram:
+	;restoring registers to values from before function execution
 	pop RDX
 	pop R8
 	pop RCX
 	pop	RBX
 	pop RAX
 	pop	RSI
+
 	ret
 
 MatrixScalarMultiplication endp
-
-;----------------------------------------------------------------------
 
 end
