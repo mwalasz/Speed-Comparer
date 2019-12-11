@@ -106,10 +106,13 @@ namespace MainProgram.Threads
             var subArray = src.Take(numOfElements)
                 .ToArray();
 
+            var arr = new List<float>(subArray).ToArray();
+
             src = src.Skip(numOfElements)
                 .ToArray();
 
-            return subArray;
+            //return subArray;
+            return arr;
         }
     }
 }
