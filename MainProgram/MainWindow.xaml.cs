@@ -11,7 +11,7 @@ namespace AssemblyProject
 {
     public partial class MainWindow : Window
     {
-        private const string DefaultSearchBoxContent = @"C:\Users\Mateusz\Desktop\arr_100x100.txt";
+        private const string DefaultSearchBoxContent = @"";
         
         private LoadedData data;
         private Executer executer;
@@ -80,7 +80,7 @@ namespace AssemblyProject
             if (CheckIfDataIsLoaded())
             {
                 var threadsToRunOn = new int[] { 1, 2, 4, 8, 16, 32, 64 };
-                var description = RunStatisticsAndGetInfo(threadsToRunOn, false);
+                var description = RunStatisticsAndGetInfo(threadsToRunOn, true);
 
                 FileSaver.SaveAndOpen(description);
             }
