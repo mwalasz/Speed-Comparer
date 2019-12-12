@@ -36,6 +36,9 @@ vector_multiplication:
 	cmp RBX, RDX				;comparing number of numbers to process with possible number to process (4)
 	jae vector_multiplication	;if number of elements to process is higher than 4 then going back to vector_multiplication
 									;if not starting single_multiplication 
+									;if it is equal to 0 then ending function
+	cmp RBX, 0
+	je end_of_function
 
 single_multiplication:
 	mov RAX, [RSI]				;loading float number from array to RAX register
@@ -51,6 +54,7 @@ single_multiplication:
 									;if not going back to single_multiplication
 
 	;restoring registers to values from before function execution
+end_of_function:
 	pop RDX
 	pop R8
 	pop RCX
