@@ -1,6 +1,4 @@
-﻿using MainProgram.Exceptions;
-using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace MainProgram.Extensions
 {

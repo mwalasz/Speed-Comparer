@@ -95,7 +95,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>D:\Studia\programowanie\Speed-Comparer\build\x64\Debug\AssemblyDll\AssemblyDll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>D:\Studia\programowanie\Speed-Comparer\build\x64\Release\AssemblyDll\AssemblyDll.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AddModuleNamesToAssembly>
       </AddModuleNamesToAssembly>
       <ModuleDefinitionFile>D:\Studia\programowanie\Speed-Comparer\Libs\AssemblyDll\source.def</ModuleDefinitionFile>
@@ -149,6 +149,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
+      <ModuleDefinitionFile>D:\Studia\programowanie\Speed-Comparer\Libs\AssemblyDll\source.def</ModuleDefinitionFile>
+      <AdditionalDependencies>D:\Studia\programowanie\Speed-Comparer\build\x64\Debug\AssemblyDll\AssemblyDll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
