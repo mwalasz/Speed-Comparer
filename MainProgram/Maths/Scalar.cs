@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 
 namespace MainProgram.Maths
 {
@@ -13,13 +14,20 @@ namespace MainProgram.Maths
 
         public Scalar(string value)
         {
-            if (string.IsNullOrEmpty(value))
+            try
             {
-                throw new System.ArgumentException("message", nameof(value));
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new System.ArgumentException("message", nameof(value));
+                }
+                else
+                {
+                    Value = float.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+                }
             }
-            else
+            catch (Exception e)
             {
-                Value = float.Parse(value, System.Globalization.CultureInfo.InvariantCulture);
+                MessageBox.Show(e.Message);
             }
         }
     }

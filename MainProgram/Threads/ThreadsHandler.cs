@@ -94,7 +94,12 @@ namespace MainProgram.Threads
             var results = new List<float>();
 
             foreach (var args in libraryArguments)
+            {
+                args.Matrix = args.Matrix.Where(x => !x.Equals(0))
+                                         .ToArray();
+                
                 results.AddRange(args.Matrix);
+            }
 
             floatArrayData = results.ToArray();
 
@@ -106,7 +111,13 @@ namespace MainProgram.Threads
             var subArrayFromOriginal = src.Take(numOfElements)
                 .ToArray();
 
-            var newArray = new List<float>(subArrayFromOriginal).ToArray();
+            var newArray = new float[numOfElements * 2];
+
+            for (int i = 0; i < subArrayFromOriginal.Length; i++)
+                newArray[i] = subArrayFromOriginal[i];
+
+            for (int i = subArrayFromOriginal.Length; i < newArray.Length; i++)
+                newArray[i] = 0; //zeroing the array surplus
 
             src = src.Skip(numOfElements)
                 .ToArray();
