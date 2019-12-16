@@ -20,16 +20,17 @@ MatrixScalarMultiplication proc
 	mov RSI, RCX				;loading pointer to array
 	mov RBX, R8					;loading array length
 	mov RDX, 4					;saving 4 as number of numbers to process
+	vpbroadcastd XMM2, XMM0		;broadcasting scalar number to every cell of vector XMM2
 	
 	cmp RBX, RDX				;comparing number of numbers to process with possible number to process (4)
 	jb single_multiplication	;if number of numbers to process is smaller than 4 then go to single_multiplication section
 									;if not starting vector_multiplication
 
+
 vector_multiplication:
 	movups XMM1, [RSI]			;loading 4 float numbers from array to XMM1 register
-	vpbroadcastd XMM2, XMM0		;broadcasting scalar number to every cell of vector
-	vmulps XMM1, XMM2, XMM1		;multiplying scalar by floats from array and storing them in XMM1 register
-	movups [RSI], XMM1			;saving processed data back to array
+	vmulps XMM3, XMM2, XMM1		;multiplying scalar by floats from array and storing them in XMM3 register
+	movups [RSI], XMM3			;saving processed data back to array
 	
 	add RSI, 16					;moving further in array by 4 positions (float = 4 bytes, 4 number * 4 bytes = 16)
 	sub RBX, RDX				;subtracting 4 from size of the array (because of 4 processed numbers)
