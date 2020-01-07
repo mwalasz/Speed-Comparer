@@ -36,9 +36,8 @@ namespace MainProgram.Libraries
         {
             try
             {
-                PrepareThreads();
-
                 StartTimeMeasuring();
+                PrepareThreads();
                 RunMethod();
                 StopTimeMeasuring();
 
